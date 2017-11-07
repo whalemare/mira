@@ -1,0 +1,41 @@
+group 'ru.whalemare'
+version '1.0'
+
+buildscript {
+    ext.kotlin_version = '1.1.51'
+
+    repositories {
+        mavenCentral()
+        mavenLocal()
+        jcenter()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+apply plugin: 'kotlin'
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+    jcenter()
+}
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
+    compile 'com.taskadapter:redmine-java-api:3.0.0'
+    // https://mvnrepository.com/artifact/args4j/args4j
+//    compile group: 'args4j', name: 'args4j', version: '2.33'
+    compile "com.jakewharton.fliptables:fliptables:1.0.2"
+//    compile "com.beust:jcommander:1.71"
+    compile 'info.picocli:picocli:2.0.2'
+
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+compileTestKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
