@@ -1,7 +1,6 @@
 package command
 
 import com.jakewharton.fliptables.FlipTable
-import com.taskadapter.redmineapi.Params
 import com.taskadapter.redmineapi.bean.Issue
 import com.taskadapter.redmineapi.internal.ResultsWrapper
 import picocli.CommandLine
@@ -21,7 +20,7 @@ class IssueCommand(val repository: Repository) : Runnable {
 
     @Option(
             names = arrayOf("-i", "--id", "-id"),
-            description = arrayOf("Index of search issue")
+            description = arrayOf("Index of search issue. It`s terminate operation")
     )
     var id: Int = Int.MIN_VALUE
 
@@ -34,25 +33,34 @@ class IssueCommand(val repository: Repository) : Runnable {
     @Option(names = arrayOf("-m", "--me"), description = arrayOf("Filter issues by assigned to me"))
     var assignedMe: Boolean = false
 
+    @Option(names = arrayOf("-f", "--filter"),
+            description = arrayOf("Filter issues with specific params",
+                    "See all available commands on http://www.redmine.org/projects/redmine/wiki/Rest_Issues")
+    )
+    var filter: MutableMap<String, String> = mutableMapOf()
+
     override fun run() {
         if (id > Int.MIN_VALUE) {
             val issue = repository.getIssue(id)
             if (print) print(issue)
+            return
+//            filter.put("issue_id", id.toString()) // not work
         }
 
         if (assignedMe) {
-            val issues = getAssignedMe()
-            if (print) {
-                println("Show: ${issues.resultsNumber}, Found: ${issues.totalFoundOnServer}")
-                print(issues.results)
-            }
+            val me = repository.getMe()
+            filter.put("assigned_to_id", me.id.toString())
+        }
+
+        val issues = getFilteredIssues()
+        if (print) {
+            println("Show: ${issues.resultsNumber}, Found: ${issues.totalFoundOnServer}")
+            print(issues.results)
         }
     }
 
-    private fun getAssignedMe(): ResultsWrapper<Issue> {
-        val me = repository.getMe()
-        val params = Params().add("assigned_to_id", me.id.toString())
-        return repository.getIssues(params)
+    private fun getFilteredIssues(): ResultsWrapper<Issue> {
+        return repository.getIssues(filter)
     }
 
     fun print(issue: Issue?) {

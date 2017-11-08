@@ -28,6 +28,11 @@ class RepositoryRedmine: Repository {
         return redmine.issueManager.getIssues(params)
     }
 
+    override fun getIssues(map: Map<String, String>): ResultsWrapper<Issue> {
+        return redmine.issueManager.getIssues(map)
+    }
+
+
     override fun getMe(): User {
         return redmine.userManager.currentUser
     }

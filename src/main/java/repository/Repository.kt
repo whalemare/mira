@@ -20,4 +20,5 @@ interface Repository {
 
     fun getMe(): User
 
+    fun getIssues(map: Map<String, String>): ResultsWrapper<Issue>
 }
