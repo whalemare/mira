@@ -40,7 +40,7 @@ class Main : Runnable {
         }
 
         fun parse(args: Array<String>) {
-            println("for parse: ${Arrays.toString(args)}")
+//            println("for parse: ${Arrays.toString(args)}")
             val commandLine = CommandLine(Main())
                     .addSubcommand("project", ProjectCommand(repository))
                     .addSubcommand("issue", IssueCommand(repository))

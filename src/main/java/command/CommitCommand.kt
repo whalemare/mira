@@ -9,7 +9,7 @@ import repository.Repository
  * @author Anton Vlasov - whalemare
  */
 @Command(name = "commit",
-        description = arrayOf("Commit your time. To issues, with favorite lists"))
+        description = arrayOf("Commit your time: to issues, with favorite lists"))
 class CommitCommand(val repository: Repository) : Runnable {
 
     @Option(names = arrayOf("-i", "--id", "-id"),

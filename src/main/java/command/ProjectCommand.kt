@@ -2,7 +2,6 @@ package command
 
 import com.jakewharton.fliptables.FlipTableConverters
 import com.taskadapter.redmineapi.bean.Project
-import picocli.CommandLine
 import picocli.CommandLine.Command
 import picocli.CommandLine.Option
 import repository.Repository
@@ -13,23 +12,19 @@ import java.util.concurrent.Callable
  * @author Anton Vlasov - whalemare
  */
 @Command(name = "project",
-        description = arrayOf("Manage your projects"))
+        description = arrayOf("Manage your projects: show all, filter"))
 class ProjectCommand(val repository: Repository) : Callable<Unit> {
     @Option(names = arrayOf("-h", "--help"),
             description = arrayOf("Help description"),
             usageHelp = true)
     var help: Boolean = false
 
-    @Option(
-            names = arrayOf("-a", "--all"),
-            description = arrayOf("Print all available projects for your account")
-    )
+    @Option(names = arrayOf("-a", "--all"),
+            description = arrayOf("Print all available projects for your account"))
     var all: Boolean = false
 
-    @Option(
-            names = arrayOf("-f", "--filter"),
-            description = arrayOf("Filter projects by id, name and link (short-name)")
-    )
+    @Option(names = arrayOf("-f", "--filter"),
+            description = arrayOf("Filter projects by id, name and link (short-name)"))
     var query: String = ""
 
     override fun call() {
