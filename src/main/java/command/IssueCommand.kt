@@ -39,12 +39,18 @@ class IssueCommand(val repository: Repository) : Runnable {
     )
     var filter: MutableMap<String, String> = mutableMapOf()
 
+    @Option(
+            names = arrayOf("-s", "--start"),
+            description = arrayOf("Create and checkout branch, for issue defined by -i=##### operation")
+    )
+    var start: Boolean = false
+
     override fun run() {
         if (id > Int.MIN_VALUE) {
             val issue = repository.getIssue(id)
+            if (start) start(issue)
             if (print) print(issue)
             return
-//            filter.put("issue_id", id.toString()) // not work
         }
 
         if (assignedMe) {
@@ -62,6 +68,14 @@ class IssueCommand(val repository: Repository) : Runnable {
     private fun getFilteredIssues(): ResultsWrapper<Issue> {
         return repository.getIssues(filter)
     }
+
+    private fun start(issue: Issue) {
+        // TODO: set issue status to In Progress
+        // TODO: get issue name, or determinate from command line and use with id
+        val command = "git checkout -b feature/#${issue.id}"
+        BashExec(command).run()
+    }
+
 
     fun print(issue: Issue?) {
         if (issue == null) {

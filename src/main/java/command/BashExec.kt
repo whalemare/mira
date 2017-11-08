@@ -14,7 +14,7 @@ import java.io.InputStreamReader
 class BashExec(private val command: String) : Runnable {
 
     override fun run() {
-        println("Executing BASH command: $command")
+        println(command)
         val r = Runtime.getRuntime()
         // Use bash -c so we can handle things like multi commands separated by ; and
         // things like quotes, $, |, and \. My tests show that command comes as
