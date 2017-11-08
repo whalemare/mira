@@ -4,6 +4,7 @@ import com.jakewharton.fliptables.FlipTable
 import com.taskadapter.redmineapi.bean.Issue
 import com.taskadapter.redmineapi.internal.ResultsWrapper
 import picocli.CommandLine
+import picocli.CommandLine.Command
 import picocli.CommandLine.Option
 import repository.Repository
 
@@ -12,10 +13,8 @@ import repository.Repository
  * @since 2017
  * @author Anton Vlasov - whalemare
  */
-@CommandLine.Command(
-        name = "issue",
-        description = arrayOf("Manage your issues: commit time, see assigned issues, etc."),
-        footer = arrayOf("mira (c) 2017"))
+@Command(name = "issue",
+        description = arrayOf("Manage your issues: commit time, see assigned issues, etc."))
 class IssueCommand(val repository: Repository) : Runnable {
 
     @Option(names = arrayOf("-i", "--id", "-id"),

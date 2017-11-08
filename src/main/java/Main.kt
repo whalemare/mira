@@ -1,29 +1,24 @@
-
+import command.CommitCommand
 import command.IssueCommand
 import command.ProjectCommand
 import picocli.CommandLine
+import picocli.CommandLine.Command
+import picocli.CommandLine.Option
 import repository.Repository
 import repository.RepositoryRedmine
 import java.util.*
-
-
-
 
 
 /**
  * @since 2017
  * @author Anton Vlasov - whalemare
  */
-@CommandLine.Command(
-        name = "mira"
-)
+@Command(name = "mira")
 class Main : Runnable {
 
-    @CommandLine.Option(
-            names = arrayOf("-h", "--help"),
+    @Option(names = arrayOf("-h", "--help"),
             usageHelp = true,
-            description = arrayOf("Show help message for mira")
-    )
+            description = arrayOf("Show help message for mira"))
     private val help: Boolean = false
 
     override fun run() {
@@ -34,7 +29,6 @@ class Main : Runnable {
         val repository: Repository = RepositoryRedmine()
 
         val scanner = Scanner(System.`in`)
-
 
         @JvmStatic
         fun main(args: Array<String>) {
@@ -50,6 +44,7 @@ class Main : Runnable {
             val commandLine = CommandLine(Main())
                     .addSubcommand("project", ProjectCommand(repository))
                     .addSubcommand("issue", IssueCommand(repository))
+                    .addSubcommand("commit", CommitCommand(repository))
                     .setOverwrittenOptionsAllowed(true)
             commandLine.parseWithHandlers(
                     CommandLine.RunLast(),

@@ -3,6 +3,7 @@ package command
 import com.jakewharton.fliptables.FlipTableConverters
 import com.taskadapter.redmineapi.bean.Project
 import picocli.CommandLine
+import picocli.CommandLine.Command
 import picocli.CommandLine.Option
 import repository.Repository
 import java.util.concurrent.Callable
@@ -11,10 +12,8 @@ import java.util.concurrent.Callable
  * @since 2017
  * @author Anton Vlasov - whalemare
  */
-@CommandLine.Command(
-        name = "project",
-        description = arrayOf("Manage your projects"),
-        footer = arrayOf("mira (c) 2017"))
+@Command(name = "project",
+        description = arrayOf("Manage your projects"))
 class ProjectCommand(val repository: Repository) : Callable<Unit> {
     @Option(names = arrayOf("-h", "--help"),
             description = arrayOf("Help description"),

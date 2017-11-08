@@ -6,6 +6,7 @@ import com.taskadapter.redmineapi.Params
 import com.taskadapter.redmineapi.RedmineManagerFactory
 import com.taskadapter.redmineapi.bean.Issue
 import com.taskadapter.redmineapi.bean.Project
+import com.taskadapter.redmineapi.bean.TimeEntryFactory
 import com.taskadapter.redmineapi.bean.User
 import com.taskadapter.redmineapi.internal.ResultsWrapper
 
@@ -14,6 +15,7 @@ import com.taskadapter.redmineapi.internal.ResultsWrapper
  * @author Anton Vlasov - whalemare
  */
 class RepositoryRedmine: Repository {
+
     val redmine = RedmineManagerFactory.createWithApiKey(Setup.redmine, Setup.apiKey)!!
 
     override fun getProjects(): List<Project> {
@@ -37,5 +39,13 @@ class RepositoryRedmine: Repository {
         return redmine.userManager.currentUser
     }
 
+    override fun commitTime(issueId: Int, hours: Int, minutes: Int) {
+        val entry = TimeEntryFactory.create(issueId).apply {
+            this.issueId = issueId
+            this.hours = (hours.toFloat() + (minutes.toFloat() / 60.toFloat()))
+        }
+
+        redmine.timeEntryManager.createTimeEntry(entry)
+    }
 
 }

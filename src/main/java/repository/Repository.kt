@@ -21,4 +21,6 @@ interface Repository {
     fun getMe(): User
 
     fun getIssues(map: Map<String, String>): ResultsWrapper<Issue>
+
+    fun commitTime(issueId: Int, hours: Int, minutes: Int)
 }
