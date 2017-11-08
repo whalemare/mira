@@ -9,6 +9,7 @@ import picocli.CommandLine.Option
 import repository.Repository
 
 /**
+ * @rest http://www.redmine.org/projects/redmine/wiki/Rest_Issues
  * @since 2017
  * @author Anton Vlasov - whalemare
  */
