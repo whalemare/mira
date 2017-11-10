@@ -1,3 +1,4 @@
+import command.AbsentCommand
 import command.CommitCommand
 import command.IssueCommand
 import command.ProjectCommand
@@ -45,6 +46,7 @@ class Main : Runnable {
                     .addSubcommand("project", ProjectCommand(repository))
                     .addSubcommand("issue", IssueCommand(repository))
                     .addSubcommand("commit", CommitCommand(repository))
+                    .addSubcommand("absent", AbsentCommand(repository))
                     .setOverwrittenOptionsAllowed(true)
             commandLine.parseWithHandlers(
                     CommandLine.RunLast(),
@@ -52,9 +54,6 @@ class Main : Runnable {
                     CommandLine.Help.Ansi.AUTO,
                     CommandLine.DefaultExceptionHandler(),
                     *args
-//                    "-h"
-//                    "issue", "-i", "73924"
-//                    "project", "--filter", "kit"
             )
         }
     }
