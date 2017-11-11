@@ -10,7 +10,7 @@ import java.util.concurrent.Callable
  * @since 2017
  * @author Anton Vlasov - whalemare
  */
-@Command(name = "auth", description = arrayOf("Authorize, after using MIRA"))
+@Command(name = "auth", description = arrayOf("Authorize, before using MIRA"))
 class AuthCommand: Callable<Auth> {
 
     @Option(names = arrayOf("-k", "--key"),
