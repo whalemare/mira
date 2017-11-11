@@ -20,7 +20,7 @@ class AbsentCommand(val repository: repository.Repository) : Runnable {
     @Option(names = arrayOf("-t", "--time"),
             description = arrayOf("The time at which you will be on the job"),
             required = true)
-    val timeShowUp: String = ""
+    val time: String = ""
 
     @Option(names = arrayOf("-r", "--reason"),
             description = arrayOf("Reason, why you can not work"))
@@ -30,8 +30,16 @@ class AbsentCommand(val repository: repository.Repository) : Runnable {
             description = arrayOf("How can members contact with you?"))
     val sources: String = "skype, почта, телефон"
 
+    @Option(names = arrayOf("-c", "--clear"),
+            description = arrayOf("Clear you current config for absent: email from, email to, password"))
+    val clear: Boolean = false
+
     override fun run() {
-        var absent = repository.getAbsentCreds()
+        var absent = if (clear) {
+            Absent()
+        } else {
+            repository.getAbsentCreds()
+        }
         if (absent == null) absent = Absent()
 
         while (absent.email.isNullOrBlank()) {
@@ -54,7 +62,7 @@ class AbsentCommand(val repository: repository.Repository) : Runnable {
                 to = absent.recipient!!,
                 subject = "${me.lastName}. Опоздание",
                 message = "Причина отсутствия: $reason\n" +
-                        "Какое время буду отсутствовать: буду на работе после $timeShowUp\n" +
+                        "Какое время буду отсутствовать: буду на работе после $time\n" +
                         "Каналы связи с вами: $sources"
         )
 
