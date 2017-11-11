@@ -7,7 +7,6 @@ import repository.Database
 import repository.Repository
 import repository.RepositoryRedmine
 import java.util.concurrent.Callable
-import javax.mail.AuthenticationFailedException
 
 /**
  * @since 2017
@@ -25,12 +24,26 @@ class AuthCommand: Callable<Repository> {
     var redmineEndpoint: String = ""
 
     override fun call(): Repository {
-        if (apiKey.isBlank()) {
-            throw AuthenticationFailedException("You must provide not empty api key")
-        }
+        val auth = Database.getInstance().getRedmine()
+        apiKey = auth?.key ?: ""
+        redmineEndpoint = auth?.redmine ?: ""
 
         if (redmineEndpoint.isBlank()) {
-            throw AuthenticationFailedException("You must provide not empty redmine endpoint")
+            while (redmineEndpoint.isBlank()) {
+                print("Redmine >> "); redmineEndpoint = readLine()!!
+
+                if (redmineEndpoint.isNotBlank()) {
+                    if (!redmineEndpoint.startsWith("http://") || !redmineEndpoint.startsWith("https://")) {
+                        redmineEndpoint = "https://$redmineEndpoint"
+                    }
+                }
+            }
+        }
+
+        if (apiKey.isBlank()) {
+            while (apiKey.isBlank()) {
+                print("Apikey >> "); apiKey = readLine()!!
+            }
         }
 
         Database.getInstance().putRedmine(redmineEndpoint, apiKey)
@@ -38,4 +51,27 @@ class AuthCommand: Callable<Repository> {
                 redmineEndpoint, apiKey
         ))
     }
+
+    fun autorize(): Repository {
+
+
+        if (apiKey.isBlank() || redmineEndpoint.isBlank()) {
+            println("Firstly, you need to authorize")
+        }
+
+        return if (redmineEndpoint.isNotBlank() && apiKey.isNotBlank()) {
+            val command = AuthCommand().apply {
+                this.redmineEndpoint = redmineEndpoint
+                this.apiKey = apiKey
+            }
+            return command.call()
+        } else {
+            if (redmineEndpoint.isBlank()) {
+                throw IllegalArgumentException("You must provide redmine endpoint")
+            } else {
+                throw IllegalArgumentException("You must provide redmine api key")
+            }
+        }
+    }
+
 }

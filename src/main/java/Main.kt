@@ -3,7 +3,6 @@ import command.*
 import picocli.CommandLine
 import picocli.CommandLine.Command
 import picocli.CommandLine.Option
-import repository.Database
 import repository.Repository
 import java.util.*
 
@@ -31,6 +30,8 @@ class Main : Runnable {
 
         @JvmStatic
         fun main(args: Array<String>) {
+            repository = AuthCommand().call()
+
             parse(args)
             while (scanner.hasNext()) {
                 parse(scanner.nextLine().split(" ").toTypedArray())
@@ -39,7 +40,6 @@ class Main : Runnable {
         }
 
         fun parse(args: Array<String>) {
-            repository = autorize()
 
             val commandLine = CommandLine(Main())
                     .addSubcommand("auth", AuthCommand())
@@ -56,32 +56,6 @@ class Main : Runnable {
                     CommandLine.DefaultExceptionHandler(),
                     *args
             )
-        }
-
-        fun autorize(): Repository {
-            val auth = Database.getInstance().getRedmine()
-            var redmineEndpoint = auth?.redmine ?: ""
-            var apiKey = auth?.key ?: ""
-
-            if (apiKey.isBlank() || redmineEndpoint.isBlank()) {
-                println("Firstly, you need to authorize")
-                print("Redmine >> "); redmineEndpoint = readLine()!!
-                print("Apikey >> "); apiKey = readLine()!!
-            }
-
-            return if (redmineEndpoint.isNotBlank() && apiKey.isNotBlank()) {
-                val command = AuthCommand().apply {
-                    this.redmineEndpoint = redmineEndpoint
-                    this.apiKey = apiKey
-                }
-                return command.call()
-            } else {
-                if (redmineEndpoint.isBlank()) {
-                    throw IllegalArgumentException("You must provide redmine endpoint")
-                } else {
-                    throw IllegalArgumentException("You must provide redmine api key")
-                }
-            }
         }
     }
 }

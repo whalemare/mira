@@ -24,9 +24,7 @@ class Database private constructor() {
         }
     }
 
-//    init {
-//        LoganSquare.registerTypeConverter(Auth::class.java, AuthTypeConverter())
-//    }
+
 
     fun putRedmine(endpoint: String, apiKey: String) {
         val file = File(MAP_REDMINE).apply {
