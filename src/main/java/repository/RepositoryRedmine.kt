@@ -1,9 +1,8 @@
 package repository
 
-import Constant
 import com.taskadapter.redmineapi.Include
 import com.taskadapter.redmineapi.Params
-import com.taskadapter.redmineapi.RedmineManagerFactory
+import com.taskadapter.redmineapi.RedmineManager
 import com.taskadapter.redmineapi.bean.Issue
 import com.taskadapter.redmineapi.bean.Project
 import com.taskadapter.redmineapi.bean.TimeEntryFactory
@@ -14,13 +13,9 @@ import com.taskadapter.redmineapi.internal.ResultsWrapper
  * @since 2017
  * @author Anton Vlasov - whalemare
  */
-class RepositoryRedmine : Repository {
+class RepositoryRedmine(private val redmine: RedmineManager) : Repository {
 
-    val cache: MutableMap<String, Any> = mutableMapOf<String, Any>()
-
-    companion object {
-        val redmine = RedmineManagerFactory.createWithApiKey(Constant.redmine, Constant.apiKey)!!
-    }
+    val cache: MutableMap<String, Any> = mutableMapOf()
 
     override fun updateIssue(issue: Issue) {
         redmine.issueManager.update(issue)

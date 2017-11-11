@@ -15,6 +15,7 @@ buildscript {
 }
 
 apply plugin: 'kotlin'
+apply plugin: 'kotlin-kapt'
 
 repositories {
     mavenCentral()
@@ -25,17 +26,16 @@ repositories {
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
     compile 'com.taskadapter:redmine-java-api:3.0.0'
-    // https://mvnrepository.com/artifact/args4j/args4j
-//    compile group: 'args4j', name: 'args4j', version: '2.33'
     compile "com.jakewharton.fliptables:fliptables:1.0.2"
-//    compile "com.beust:jcommander:1.71"
     compile 'info.picocli:picocli:2.0.2'
-    compile 'org.mapdb:mapdb:3.0.5'
-// https://mvnrepository.com/artifact/javax.mail/mail
+//    compile 'com.bluelinelabs:logansquare:1.3.7'
+//    apt 'com.bluelinelabs:logansquare-compiler:1.3.7'
+    compile 'com.google.code.gson:gson:2.8.2'
+    // https://mvnrepository.com/artifact/javax.mail/mail
     compile group: 'javax.mail', name: 'mail', version: '1.4.7'
-    compile 'com.google.api-client:google-api-client:1.23.0'
+//    compile 'com.google.api-client:google-api-client:1.23.0'
     // https://mvnrepository.com/artifact/org.slf4j/slf4j-nop
-    testCompile group: 'org.slf4j', name: 'slf4j-nop', version: '1.7.21'
+    compile group: 'org.slf4j', name: 'slf4j-nop', version: '1.7.21'
 }
 
 compileKotlin {
