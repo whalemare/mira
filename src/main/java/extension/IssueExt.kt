@@ -59,13 +59,13 @@ fun Issue.isProgress(): Boolean {
     return statusId == 2 || statusName == "In setProgress"
 }
 
-fun Issue?.println() {
+fun Issue?.println(showAll: Boolean = true) {
     if (this == null) {
         println("Issue not found")
         return
     }
 
-    listOf(this).println(true)
+    listOf(this).println(showAll)
 }
 
 fun List<Issue>?.println(showAll: Boolean = true) {

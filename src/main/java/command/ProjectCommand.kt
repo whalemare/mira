@@ -12,7 +12,7 @@ import java.util.concurrent.Callable
  * @author Anton Vlasov - whalemare
  */
 @Command(name = "project",
-        description = arrayOf("Manage your projects: show all, filter"))
+        description = arrayOf("Manage your projects: show all, filterRest"))
 class ProjectCommand(val repository: Repository) : Callable<Unit> {
     @Option(names = arrayOf("-h", "--help"),
             description = arrayOf("Help description"),
@@ -23,7 +23,7 @@ class ProjectCommand(val repository: Repository) : Callable<Unit> {
             description = arrayOf("Print all available projects for your account"))
     var all: Boolean = false
 
-    @Option(names = arrayOf("-f", "--filter"),
+    @Option(names = arrayOf("-f", "--filterRest"),
             description = arrayOf("Filter projects by id, name and link (short-name)"))
     var query: String = ""
 
