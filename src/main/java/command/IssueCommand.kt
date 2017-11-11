@@ -3,7 +3,6 @@ package command
 import com.jakewharton.fliptables.FlipTable
 import com.taskadapter.redmineapi.bean.Issue
 import com.taskadapter.redmineapi.internal.ResultsWrapper
-import extension.inProgress
 import picocli.CommandLine.Command
 import picocli.CommandLine.Option
 import repository.Repository
@@ -45,7 +44,6 @@ class IssueCommand(val repository: Repository) : Runnable {
     override fun run() {
         if (id > Int.MIN_VALUE) {
             val issue = repository.getIssue(id)
-            if (start) start(issue)
             if (print) print(issue)
             return
         }
@@ -64,14 +62,6 @@ class IssueCommand(val repository: Repository) : Runnable {
 
     private fun getFilteredIssues(): ResultsWrapper<Issue> {
         return repository.getIssues(filter)
-    }
-
-    private fun start(issue: Issue) {
-        issue.inProgress()
-        repository.updateIssue(issue)
-        // TODO: get issue name, or determinate from command line and use with id
-        val command = "git checkout -b feature/#${issue.id}"
-        BashExec(command).run()
     }
 
     fun print(issue: Issue?) {

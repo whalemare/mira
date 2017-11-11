@@ -1,46 +1,113 @@
 package extension
 
+import com.jakewharton.fliptables.FlipTable
 import com.taskadapter.redmineapi.bean.Issue
 import com.taskadapter.redmineapi.bean.IssueStatus
 import com.taskadapter.redmineapi.bean.IssueStatusFactory
+import extension.IssueExt.IN_PROGRESS
 
 /**
  * @since 2017
  * @author Anton Vlasov - whalemare
  */
 
-//0 = {IssueStatus@1995} "Status [id=1, name=New, isDefault=true, closed=false]"
-//1 = {IssueStatus@1996} "Status [id=2, name=In progress, isDefault=false, closed=false]"
-//2 = {IssueStatus@1997} "Status [id=18, name=In review, isDefault=false, closed=false]"
-//3 = {IssueStatus@1998} "Status [id=3, name=Resolved, isDefault=false, closed=false]"
-//4 = {IssueStatus@1999} "Status [id=11, name=Ready to test, isDefault=false, closed=false]"
-//5 = {IssueStatus@2000} "Status [id=12, name=In QA, isDefault=false, closed=false]"
-//6 = {IssueStatus@2001} "Status [id=13, name=Reopened, isDefault=false, closed=false]"
-//7 = {IssueStatus@2002} "Status [id=5, name=Closed, isDefault=false, closed=true]"
-//8 = {IssueStatus@2003} "Status [id=8, name=Duplicate, isDefault=false, closed=true]"
-//9 = {IssueStatus@2004} "Status [id=6, name=Rejected, isDefault=false, closed=true]"
-//10 = {IssueStatus@2005} "Status [id=7, name=Need feedback, isDefault=false, closed=false]"
-//11 = {IssueStatus@2006} "Status [id=4, name=Testing, isDefault=false, closed=false]"
-//12 = {IssueStatus@2007} "Status [id=10, name=Can't reproduce, isDefault=false, closed=false]"
-//13 = {IssueStatus@2008} "Status [id=9, name=Assign, isDefault=false, closed=false]"
-//14 = {IssueStatus@2009} "Status [id=14, name=Estimated, isDefault=false, closed=false]"
-//15 = {IssueStatus@2010} "Status [id=15, name=Sent to Customer, isDefault=false, closed=false]"
-//16 = {IssueStatus@2011} "Status [id=16, name=Lost, isDefault=false, closed=true]"
-//17 = {IssueStatus@2012} "Status [id=17, name=Won, isDefault=false, closed=true]"
-//18 = {IssueStatus@2013} "Status [id=19, name=Investigated, isDefault=false, closed=true]"
-//19 = {IssueStatus@2014} "Status [id=20, name=Accepted, isDefault=false, closed=true]"
-//20 = {IssueStatus@2015} "Status [id=21, name=Acceptance, isDefault=false, closed=false]"
-//21 = {IssueStatus@2016} "Status [id=22, name=Warranty, isDefault=false, closed=false]"
-//22 = {IssueStatus@2017} "Status [id=24, name=Support, isDefault=false, closed=false]"
-//23 = {IssueStatus@2018} "Status [id=23, name=Finished, isDefault=false, closed=false]"
-//24 = {IssueStatus@2019} "Status [id=25, name=Paused, isDefault=false, closed=false]"
+object IssueExt {
+    val NEW = IssueStatusFactory.create(1, "New")!!
+    val IN_PROGRESS = IssueStatusFactory.create(2, "In Progress")!!
+    val IN_REVIEW = IssueStatusFactory.create(18, "In review")!!
+    val RESOLVED = IssueStatusFactory.create(3, "Resolved")!!
+    val READY_TO_TEST = IssueStatusFactory.create(11, "Ready to test")!!
+    val IN_QA = IssueStatusFactory.create(12, "In QA")!!
+    val REOPENED = IssueStatusFactory.create(13, "Reopened")!!
+    val CLOSED = IssueStatusFactory.create(5, "Closed")!!
+    val DUPLICATE = IssueStatusFactory.create(8, "Duplicate")!!
+    val REJECTED = IssueStatusFactory.create(6, "Rejected")!!
+    val NEED_FEEDBACK = IssueStatusFactory.create(7, "Need feedback")!!
+    val TESTING = IssueStatusFactory.create(4, "Testing")!!
+    val CANT_REPRODUCE = IssueStatusFactory.create(10, "Can't reproduce")!!
+    val ASSIGN = IssueStatusFactory.create(9, "Assign")!!
+    val ESTIMATED = IssueStatusFactory.create(14, "Estimated")!!
+    val SENT_TO_CUSTOMER = IssueStatusFactory.create(15, "Sent to Customer")!!
+    val LOST = IssueStatusFactory.create(16, "Lost")!!
+    val WON = IssueStatusFactory.create(17, "Won")!!
+    val INVESTIGATED = IssueStatusFactory.create(19, "Investigated")!!
+    val ACCEPTED = IssueStatusFactory.create(20, "Accepted")!!
+    val ACCEPTANCE = IssueStatusFactory.create(21, "Acceptance")!!
+    val WARRANTY = IssueStatusFactory.create(22, "Warranty")!!
+    val SUPPORT = IssueStatusFactory.create(24, "Support")!!
+    val FINISHED = IssueStatusFactory.create(23, "Finished")!!
+    val PAUSED = IssueStatusFactory.create(25, "Paused")!!
+}
 
-
+/**
+ * See IssueExt class. Be sure, that this status supported by your Redmine
+ * @sample IssueExt.IN_PROGRESS
+ * @sample IssueExt.NEW
+ * @sample IssueExt.REJECTED
+ * @sample IssueExt.PAUSED
+ */
 fun Issue.setStatus(status: IssueStatus) {
     statusId = status.id
     statusName = status.name
 }
 
-fun Issue.inProgress() {
-    setStatus(IssueStatusFactory.create(2, "In progress"))
+fun Issue.setProgress() {
+    setStatus(IN_PROGRESS)
+}
+
+fun Issue.isProgress(): Boolean {
+    return statusId == 2 || statusName == "In setProgress"
+}
+
+fun Issue?.println() {
+    if (this == null) {
+        println("Issue not found")
+        return
+    }
+
+    listOf(this).println(true)
+}
+
+fun List<Issue>?.println(showAll: Boolean = true) {
+    if (this == null || isEmpty()) {
+        println("List of issue is empty")
+        return
+    }
+
+    val headers = if (showAll) {
+        arrayOf("id", "subject", "author", "assigned", "status", "spent", "estimated", "created", "closed")
+    } else {
+        arrayOf("id", "subject", "assigned", "status", "spent")
+    }
+
+    val content = if (showAll) {
+        Array(size) {
+            val issue = this[it]
+            return@Array arrayOf(
+                    issue.id.toString(),
+                    issue.subject ?: "?",
+                    issue.authorName,
+                    issue.assigneeName ?: "?",
+                    issue.statusName ?: "?",
+                    issue.spentHours?.toString() ?: "?",
+                    issue.estimatedHours?.toString() ?: "?",
+                    issue.createdOn?.toString() ?: "?",
+                    issue.closedOn?.toString() ?: "?"
+            )
+        }
+    } else {
+        Array(size) {
+            val issue = this[it]
+            return@Array arrayOf(
+                    issue.id.toString(),
+                    issue.subject ?: "?",
+                    issue.assigneeName ?: "?",
+                    issue.statusName ?: "?",
+                    issue.spentHours?.toString() ?: "?"
+            )
+        }
+    }
+
+    println(FlipTable.of(headers, content))
+
 }

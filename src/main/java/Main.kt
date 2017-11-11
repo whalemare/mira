@@ -1,7 +1,4 @@
-import command.AbsentCommand
-import command.CommitCommand
-import command.IssueCommand
-import command.ProjectCommand
+import command.*
 import picocli.CommandLine
 import picocli.CommandLine.Command
 import picocli.CommandLine.Option
@@ -47,6 +44,7 @@ class Main : Runnable {
                     .addSubcommand("issue", IssueCommand(repository))
                     .addSubcommand("commit", CommitCommand(repository))
                     .addSubcommand("absent", AbsentCommand(repository))
+                    .addSubcommand("start", StartCommand(repository))
                     .setOverwrittenOptionsAllowed(true)
             commandLine.parseWithHandlers(
                     CommandLine.RunLast(),

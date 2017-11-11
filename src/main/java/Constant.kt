@@ -2,7 +2,8 @@
  * @since 2017
  * @author Anton Vlasov - whalemare
  */
-object Setup {
+object Constant {
+
 
     val redmine = "https://redmine.magora.team"
 
