@@ -29,15 +29,20 @@ class Database private constructor() {
 
 
     fun putRedmine(endpoint: String, apiKey: String) {
-        val file = File(MAP_REDMINE).apply {
-            createNewFile()
+        if (endpoint.isBlank() && apiKey.isBlank()) {
+            val file = File(MAP_REDMINE)
+            file.delete()
+        } else {
+            val file = File(MAP_REDMINE).apply {
+                createNewFile()
+            }
+            val auth = Auth().apply {
+                this.redmine = endpoint
+                this.key = apiKey
+            }
+            val json = Gson().toJson(auth)
+            file.writeText(json)
         }
-        val auth = Auth().apply {
-            this.redmine = endpoint
-            this.key = apiKey
-        }
-        val json = Gson().toJson(auth)
-        file.writeText(json)
     }
 
     fun getRedmine(): Auth? {

@@ -69,8 +69,12 @@ class Main : Runnable {
             repository = RepositoryRedmine(RedmineManagerFactory.createWithApiKey(
                     auth.redmine, auth.key
             ))
-            val me = repository.getMe()
-            return auth to me
+            try {
+                return auth to repository.getMe()
+            } catch (e: Exception) {
+                Database.getInstance().putRedmine("", "")
+                throw e
+            }
         }
 
         private fun sayHello(me: User) {
