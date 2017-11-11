@@ -5,6 +5,7 @@ import extension.*
 import picocli.CommandLine.Command
 import picocli.CommandLine.Option
 import repository.Repository
+import usecase.InteractorBash
 
 /**
  * @since 2017
@@ -52,7 +53,7 @@ class StartCommand(val repository: Repository) : Runnable {
         if (needBranch) {
             val branchName = makeBranchName(issue)
             val command = "git checkout -b $branchName"
-            BashExec(command).run()
+            InteractorBash(command).run()
         }
 
         if (hashIssue != issue.hashCode()) repository.updateIssue(issue)

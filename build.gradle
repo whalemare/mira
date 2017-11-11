@@ -34,7 +34,8 @@ dependencies {
 // https://mvnrepository.com/artifact/javax.mail/mail
     compile group: 'javax.mail', name: 'mail', version: '1.4.7'
     compile 'com.google.api-client:google-api-client:1.23.0'
-    compile 'com.google.android.gms:play-services:11.4.2'
+    // https://mvnrepository.com/artifact/org.slf4j/slf4j-nop
+    testCompile group: 'org.slf4j', name: 'slf4j-nop', version: '1.7.21'
 }
 
 compileKotlin {

@@ -1,8 +1,8 @@
 package command
 
-import AbsentEmail
 import picocli.CommandLine.Command
 import picocli.CommandLine.Option
+import usecase.InteractorEmail
 
 /**
  * @since 2017
@@ -19,7 +19,7 @@ class AbsentCommand(val repository: repository.Repository) : Runnable {
 
     override fun run() {
         val me = repository.getMe()
-        AbsentEmail(me, timeShowUp).run()
+        InteractorEmail(me, timeShowUp).run()
     }
 
 }

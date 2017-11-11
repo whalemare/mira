@@ -1,4 +1,4 @@
-package command
+package usecase
 
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -11,7 +11,7 @@ import java.io.InputStreamReader
  * @since 2017
  * @author Anton Vlasov - whalemare
  */
-class BashExec(private val command: String) : Runnable {
+class InteractorBash(private val command: String) : Runnable {
 
     override fun run() {
         println(command)

@@ -1,3 +1,5 @@
+package usecase
+
 import com.taskadapter.redmineapi.bean.User
 import java.util.*
 import javax.mail.*
@@ -9,7 +11,7 @@ import javax.mail.internet.MimeMessage
  * @since 2017
  * @author Anton Vlasov - whalemare
  */
-class AbsentEmail(
+class InteractorEmail(
         private val user: User,
         private val time: String
 ) : Runnable {

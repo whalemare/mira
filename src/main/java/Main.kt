@@ -5,6 +5,8 @@ import picocli.CommandLine.Option
 import repository.Repository
 import repository.RepositoryRedmine
 import java.util.*
+import java.util.logging.Level
+import java.util.logging.Logger
 
 
 /**
@@ -38,6 +40,7 @@ class Main : Runnable {
         }
 
         fun parse(args: Array<String>) {
+            Logger.getGlobal().level = Level.OFF
 //            println("for parse: ${Arrays.toString(args)}")
             val commandLine = CommandLine(Main())
                     .addSubcommand("project", ProjectCommand(repository))
