@@ -40,7 +40,6 @@ class RepositoryRedmine(private val redmine: RedmineManager) : Repository {
 
     override fun getMe(): User {
         val key = "ME"
-
         if (cache[key] == null) {
             cache[key] = redmine.userManager.currentUser
         }

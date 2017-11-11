@@ -1,11 +1,9 @@
 package command
 
-import com.taskadapter.redmineapi.RedmineManagerFactory
+import model.Auth
 import picocli.CommandLine.Command
 import picocli.CommandLine.Option
 import repository.Database
-import repository.Repository
-import repository.RepositoryRedmine
 import java.util.concurrent.Callable
 
 /**
@@ -13,7 +11,7 @@ import java.util.concurrent.Callable
  * @author Anton Vlasov - whalemare
  */
 @Command(name = "auth", description = arrayOf("Authorize, after using MIRA"))
-class AuthCommand: Callable<Repository> {
+class AuthCommand: Callable<Auth> {
 
     @Option(names = arrayOf("-k", "--key"),
             description = arrayOf("https://redmine.magora.team/my/account", "Check \"API\" field"))
@@ -23,7 +21,7 @@ class AuthCommand: Callable<Repository> {
             description = arrayOf("Domain of your redmine. ex: redmine.magora.com"))
     var redmineEndpoint: String = ""
 
-    override fun call(): Repository {
+    override fun call(): Auth {
         val auth = Database.getInstance().getRedmine()
         apiKey = auth?.key ?: ""
         redmineEndpoint = auth?.redmine ?: ""
@@ -46,32 +44,12 @@ class AuthCommand: Callable<Repository> {
             }
         }
 
-        Database.getInstance().putRedmine(redmineEndpoint, apiKey)
-        return RepositoryRedmine(RedmineManagerFactory.createWithApiKey(
-                redmineEndpoint, apiKey
-        ))
-    }
-
-    fun autorize(): Repository {
-
-
-        if (apiKey.isBlank() || redmineEndpoint.isBlank()) {
-            println("Firstly, you need to authorize")
+        return Auth().apply {
+            this.redmine = redmineEndpoint
+            this.key = apiKey
         }
-
-        return if (redmineEndpoint.isNotBlank() && apiKey.isNotBlank()) {
-            val command = AuthCommand().apply {
-                this.redmineEndpoint = redmineEndpoint
-                this.apiKey = apiKey
-            }
-            return command.call()
-        } else {
-            if (redmineEndpoint.isBlank()) {
-                throw IllegalArgumentException("You must provide redmine endpoint")
-            } else {
-                throw IllegalArgumentException("You must provide redmine api key")
-            }
-        }
+//        return RepositoryRedmine(RedmineManagerFactory.createWithApiKey(
+//                redmineEndpoint, apiKey
+//        ))
     }
-
 }

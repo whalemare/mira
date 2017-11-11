@@ -1,9 +1,14 @@
 
+import com.taskadapter.redmineapi.RedmineManagerFactory
+import com.taskadapter.redmineapi.bean.User
 import command.*
+import model.Auth
 import picocli.CommandLine
 import picocli.CommandLine.Command
 import picocli.CommandLine.Option
+import repository.Database
 import repository.Repository
+import repository.RepositoryRedmine
 import java.util.*
 
 
@@ -30,7 +35,9 @@ class Main : Runnable {
 
         @JvmStatic
         fun main(args: Array<String>) {
-            repository = AuthCommand().call()
+            val creds = login()
+            Database.getInstance().putRedmine(creds.first.redmine!!, creds.first.key!!)
+            sayHello(creds.second)
 
             parse(args)
             while (scanner.hasNext()) {
@@ -40,7 +47,6 @@ class Main : Runnable {
         }
 
         fun parse(args: Array<String>) {
-
             val commandLine = CommandLine(Main())
                     .addSubcommand("auth", AuthCommand())
                     .addSubcommand("project", ProjectCommand(repository))
@@ -56,6 +62,19 @@ class Main : Runnable {
                     CommandLine.DefaultExceptionHandler(),
                     *args
             )
+        }
+
+        private fun login(): Pair<Auth, User> {
+            val auth = AuthCommand().call()
+            repository = RepositoryRedmine(RedmineManagerFactory.createWithApiKey(
+                    auth.redmine, auth.key
+            ))
+            val me = repository.getMe()
+            return auth to me
+        }
+
+        private fun sayHello(me: User) {
+            println("Hello, ${me.firstName}")
         }
     }
 }
