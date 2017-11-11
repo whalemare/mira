@@ -3,6 +3,7 @@ package command
 import com.jakewharton.fliptables.FlipTable
 import com.taskadapter.redmineapi.bean.Issue
 import com.taskadapter.redmineapi.internal.ResultsWrapper
+import extension.inProgress
 import picocli.CommandLine.Command
 import picocli.CommandLine.Option
 import repository.Repository
@@ -66,7 +67,8 @@ class IssueCommand(val repository: Repository) : Runnable {
     }
 
     private fun start(issue: Issue) {
-        // TODO: set issue status to In Progress
+        issue.inProgress()
+        repository.updateIssue(issue)
         // TODO: get issue name, or determinate from command line and use with id
         val command = "git checkout -b feature/#${issue.id}"
         BashExec(command).run()

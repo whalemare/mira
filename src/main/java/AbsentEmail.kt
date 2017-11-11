@@ -46,7 +46,7 @@ class AbsentEmail(
 
             Transport.send(message)
 
-            println("Done")
+            println("Сообщение отправлено")
         } catch (e: MessagingException) {
             println("Can`t send message, please toggle \'less secure apps\' in your gmail account: ")
             println("https://myaccount.google.com/lesssecureapps")

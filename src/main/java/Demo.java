@@ -70,7 +70,7 @@ public class Demo implements Runnable {
     }
 
     public static void main(String[] args) {
-        CommandLine.run(new Demo(), System.err, "git", "status");
+        CommandLine.run(new Demo(), System.err, "-h");
     }
 
     @Option(names = {"-a", "--autocomplete"}, description = "Generate sample autocomplete script for git")

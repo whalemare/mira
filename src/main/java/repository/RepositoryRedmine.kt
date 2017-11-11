@@ -15,8 +15,13 @@ import com.taskadapter.redmineapi.internal.ResultsWrapper
  * @author Anton Vlasov - whalemare
  */
 class RepositoryRedmine: Repository {
+    companion object {
+        val redmine = RedmineManagerFactory.createWithApiKey(Setup.redmine, Setup.apiKey)!!
+    }
 
-    val redmine = RedmineManagerFactory.createWithApiKey(Setup.redmine, Setup.apiKey)!!
+    override fun updateIssue(issue: Issue) {
+        redmine.issueManager.update(issue)
+    }
 
     override fun getProjects(): List<Project> {
         return redmine.projectManager.projects
