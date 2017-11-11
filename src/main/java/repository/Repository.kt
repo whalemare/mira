@@ -5,6 +5,7 @@ import com.taskadapter.redmineapi.bean.Issue
 import com.taskadapter.redmineapi.bean.Project
 import com.taskadapter.redmineapi.bean.User
 import com.taskadapter.redmineapi.internal.ResultsWrapper
+import model.Absent
 
 /**
  * @since 2017
@@ -25,4 +26,6 @@ interface Repository {
     fun commitTime(issueId: Int, hours: Int, minutes: Int)
 
     fun updateIssue(issue: Issue)
+
+    fun getAbsentCreds(): Absent?
 }

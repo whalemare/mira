@@ -8,13 +8,13 @@ import com.taskadapter.redmineapi.bean.Project
 import com.taskadapter.redmineapi.bean.TimeEntryFactory
 import com.taskadapter.redmineapi.bean.User
 import com.taskadapter.redmineapi.internal.ResultsWrapper
+import model.Absent
 
 /**
  * @since 2017
  * @author Anton Vlasov - whalemare
  */
 class RepositoryRedmine(private val redmine: RedmineManager) : Repository {
-
     val cache: MutableMap<String, Any> = mutableMapOf()
 
     override fun updateIssue(issue: Issue) {
@@ -54,6 +54,10 @@ class RepositoryRedmine(private val redmine: RedmineManager) : Repository {
         }
 
         redmine.timeEntryManager.createTimeEntry(entry)
+    }
+
+    override fun getAbsentCreds(): Absent? {
+        return Database.getInstance().getAbsentCreds()
     }
 
 }

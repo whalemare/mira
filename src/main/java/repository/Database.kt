@@ -1,6 +1,7 @@
 package repository
 
 import com.google.gson.Gson
+import model.Absent
 import model.Auth
 import java.io.File
 
@@ -11,6 +12,7 @@ import java.io.File
 class Database private constructor() {
     companion object {
         const val MAP_REDMINE = "redmine.json"
+        const val FILE_EMAIL = "email.json"
 //        const val KEY_ENDPOINT = "endpoint"
 //        const val KEY_API = "keyapi"
         private var database: Database? = null
@@ -44,5 +46,21 @@ class Database private constructor() {
         }
         val auth: Auth? = Gson().fromJson(file.readText(), Auth::class.java)
         return auth
+    }
+
+    fun getAbsentCreds(): Absent? {
+        val file = File(FILE_EMAIL).apply {
+            createNewFile()
+        }
+        val absentCreds: Absent? = Gson().fromJson(file.readText(), Absent::class.java)
+        return absentCreds
+    }
+
+    fun putAbsentCreds(absent: Absent) {
+        val file = File(FILE_EMAIL).apply {
+            createNewFile()
+        }
+        val json = Gson().toJson(absent, Absent::class.java)
+        file.writeText(json)
     }
 }
