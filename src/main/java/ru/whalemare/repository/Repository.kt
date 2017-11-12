@@ -28,7 +28,11 @@ interface Repository {
 
     fun updateIssue(issue: Issue)
 
-    fun getAbsentCreds(): Absent?
+    fun getAbsentCreds(): Absent
 
     fun getAbsentMessage(): Message
+
+    fun putAbsentCreds(absent: Absent): String
+
+    fun putAbsentMessage(message: Message): String
 }

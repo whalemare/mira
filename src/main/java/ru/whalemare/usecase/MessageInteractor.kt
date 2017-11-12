@@ -26,7 +26,7 @@ class MessageInteractor(private val message: Message) : Callable<Message> {
             subject = subject.replace("\$$key", value)
         }
 
-        return Message(subject, parsedMessageLines, emptyMap())
+        return Message(subject, parsedMessageLines, message.params)
     }
 
 

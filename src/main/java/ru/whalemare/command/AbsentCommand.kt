@@ -2,6 +2,7 @@ package ru.whalemare.command
 
 import picocli.CommandLine
 import picocli.CommandLine.Option
+import ru.whalemare.model.Absent
 import ru.whalemare.model.Message
 import ru.whalemare.repository.Repository
 import ru.whalemare.usecase.MessageInteractor
@@ -13,7 +14,7 @@ import ru.whalemare.usecase.MessageInteractor
 @CommandLine.Command(name = "absent",
         description = arrayOf("Notify all about your absent today"),
         showDefaultValues = true)
-class AbsentCommand(val repository: Repository): Runnable {
+class AbsentCommand(val repository: Repository) : Runnable {
 
     @Option(names = arrayOf("-?", "--help"),
             description = arrayOf("Help"),
@@ -41,6 +42,35 @@ class AbsentCommand(val repository: Repository): Runnable {
 //    val sources: Map<String, String> = mapOf()
 
     override fun run() {
+        val message: Message = askMessage()
+        val absent: Absent = askAbsent()
+
+        val parsedMessage: Message = MessageInteractor(message).call()
+        val approveSend: Boolean = askSendMessage(parsedMessage)
+
+        if (approveSend) {
+            saveData(message, absent)
+            sendMessage(absent, parsedMessage)
+        } else {
+            println("Message not sended. All input data not saved.")
+        }
+    }
+
+    protected fun saveData(message: Message, absent: Absent) {
+        val credsPath = repository.putAbsentCreds(absent)
+        val messagePath = repository.putAbsentMessage(message)
+        println("I saved your credentials into $credsPath")
+        println("I saved your email template into $messagePath")
+    }
+
+    protected fun askSendMessage(parsedMessage: Message): Boolean {
+        println("You really want send message (y/n):")
+        parsedMessage.println()
+        val answer = readLine()
+        return answer == "y" || answer == "yes"
+    }
+
+    protected fun askMessage(): Message {
         val message = repository.getAbsentMessage()
 
         if (lastname.isNotBlank()) {
@@ -55,21 +85,43 @@ class AbsentCommand(val repository: Repository): Runnable {
             message.params["time"] = time
         }
 
-        val parsedMessage = MessageInteractor(message).call()
-        sendMessage(parsedMessage)
+        return message
     }
 
-    private fun sendMessage(message: Message) {
-        println("You really want send message (y/n):")
-        message.println()
-        val answer = readLine()
-        if (answer == "y" || answer == "yes") {
-//            Database.getInstance().putAbsentCreds(absent)
-            println("sended and saved")
-//            SendEmailInteractor(PasswordAuthentication(absent.email, absent.password), message)/*.run()*/
-        } else {
-            println("Message not sended")
+    protected fun askAbsent(): Absent {
+        val absent = repository.getAbsentCreds()
+
+        if (absent.email.isNullOrBlank() || absent.password.isNullOrBlank() || absent.email.isNullOrBlank()) {
+            println("I not have credentials for your email, please enter: ")
         }
+
+        while (absent.email.isNullOrBlank()) {
+            print("From >> "); absent.email = readLine()
+        }
+
+        while (absent.recipient.isNullOrBlank()) {
+            print("To >> "); absent.recipient = readLine()
+        }
+
+        while (absent.password.isNullOrBlank()) {
+            print("Pass >> ");
+            val pass = readPassword()
+            absent.password = String(pass)
+        }
+
+        return absent
+    }
+
+    protected fun readPassword(): CharArray {
+        return if (System.console() != null) {
+            System.console().readPassword()
+        } else {
+            readLine()?.toCharArray() ?: charArrayOf()
+        }
+    }
+
+    protected fun sendMessage(absent: Absent, message: Message) {
+//            SendEmailInteractor(PasswordAuthentication(absent.email, absent.password), message)/*.run()*/
     }
 
     private fun Message.println() {

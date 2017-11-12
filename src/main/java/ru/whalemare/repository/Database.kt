@@ -63,12 +63,13 @@ class Database private constructor() {
         return absentCreds
     }
 
-    fun putAbsentCreds(absent: Absent) {
+    fun putAbsentCreds(absent: Absent): String {
         val file = File(FILE_EMAIL).apply {
             createNewFile()
         }
         val json = gson.toJson(absent, Absent::class.java)
         file.writeText(json)
+        return file.path
     }
 
     fun getAbsentMessage(): Message? {
@@ -77,5 +78,14 @@ class Database private constructor() {
         }
         val message: Message? = gson.fromJson(file.readText(), Message::class.java)
         return message
+    }
+
+    fun putAbsentMessage(message: Message): String {
+        val file = File(FILE_ABSENT_MESSAGE).apply {
+            createNewFile()
+        }
+        val json = gson.toJson(message, Message::class.java)
+        file.writeText(json)
+        return file.path
     }
 }

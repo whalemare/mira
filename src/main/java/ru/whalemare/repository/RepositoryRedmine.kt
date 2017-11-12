@@ -57,8 +57,12 @@ class RepositoryRedmine(private val redmine: RedmineManager) : Repository {
         redmine.timeEntryManager.createTimeEntry(entry)
     }
 
-    override fun getAbsentCreds(): Absent? {
-        return Database.getInstance().getAbsentCreds()
+    override fun getAbsentCreds(): Absent {
+        var absent = Database.getInstance().getAbsentCreds()
+        if (absent == null) {
+            absent = Absent()
+        }
+        return absent
     }
 
     override fun getAbsentMessage(): Message {
@@ -67,5 +71,13 @@ class RepositoryRedmine(private val redmine: RedmineManager) : Repository {
             message = Message()
         }
         return message
+    }
+
+    override fun putAbsentCreds(absent: Absent): String {
+        return Database.getInstance().putAbsentCreds(absent)
+    }
+
+    override fun putAbsentMessage(message: Message): String {
+        return Database.getInstance().putAbsentMessage(message)
     }
 }
