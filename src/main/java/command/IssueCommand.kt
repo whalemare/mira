@@ -41,7 +41,7 @@ class IssueCommand(val repository: Repository) : Runnable {
                     "See all available commands on http://www.redmine.org/projects/redmine/wiki/Rest_Issues"))
     var filterRest: MutableMap<String, String> = mutableMapOf()
 
-    @Option(names = arrayOf("-h", "--help"),
+    @Option(names = arrayOf("-h", "-?", "--help"),
             description = arrayOf("Help"),
             usageHelp = true)
     val help = true

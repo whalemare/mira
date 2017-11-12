@@ -33,7 +33,7 @@ class StartCommand(val repository: Repository) : Runnable {
             description = arrayOf("Add postfix to your branch name. ex: feature/#12345-postfix"))
     val postfix: String = ""
 
-    @Option(names = arrayOf("-h", "--help"),
+    @Option(names = arrayOf("-h", "-?", "--help"),
             description = arrayOf("Help"),
             usageHelp = true)
     val help = true

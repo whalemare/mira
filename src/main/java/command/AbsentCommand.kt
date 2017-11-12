@@ -34,7 +34,7 @@ class AbsentCommand(val repository: repository.Repository) : Runnable {
             description = arrayOf("Clear you current config for absent: email from, email to, password"))
     val clear: Boolean = false
 
-    @Option(names = arrayOf("-h", "--help"),
+    @Option(names = arrayOf("-h", "-?", "--help"),
             description = arrayOf("Help"),
             usageHelp = true)
     val help = true

@@ -14,7 +14,7 @@ import java.util.concurrent.Callable
 @Command(name = "project",
         description = arrayOf("Manage your projects: show all, filterRest"))
 class ProjectCommand(val repository: Repository) : Callable<Unit> {
-    @Option(names = arrayOf("-h", "--help"),
+    @Option(names = arrayOf("-h", "-?", "--help"),
             description = arrayOf("Help"),
             usageHelp = true)
     val help = true

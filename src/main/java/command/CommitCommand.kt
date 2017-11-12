@@ -25,7 +25,7 @@ class CommitCommand(val repository: Repository) : Runnable {
             description = arrayOf("Set minutes to time for commit"))
     var minutes: String = ""
 
-    @Option(names = arrayOf("-h", "--help"),
+    @Option(names = arrayOf("-?", "--help"),
             description = arrayOf("Help"),
             usageHelp = true)
     val help = true
