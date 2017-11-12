@@ -70,6 +70,9 @@ Commands:
 
 6. Send email to "absent alias email" of your organization, with message:
     that you be available after 13:30, by reason that you has exam in university,
+    ```
+    absent -t 13:00
+    ```
 
 ### Help commands
 
