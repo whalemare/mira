@@ -18,17 +18,16 @@ import javax.mail.PasswordAuthentication
 class AbsentCommand(val repository: repository.Repository) : Runnable {
 
     @Option(names = arrayOf("-t", "--time"),
-            description = arrayOf("The time at which you will be on the job"),
-            required = true)
+            description = arrayOf("The time at which you will be on the job"))
     val time: String = ""
 
     @Option(names = arrayOf("-r", "--reason"),
             description = arrayOf("Reason, why you can not work"))
-    val reason: String = "учёба"
+    val reason: List<String> = listOf("учёба")
 
     @Option(names = arrayOf("-s", "--sources"),
             description = arrayOf("How can members contact with you?"))
-    val sources: String = "skype, почта, телефон"
+    val sources: List<String> = listOf("skype", "почта", "телефон")
 
     @Option(names = arrayOf("-c", "--clear"),
             description = arrayOf("Clear you current config for absent: email from, email to, password"))
@@ -76,7 +75,8 @@ class AbsentCommand(val repository: repository.Repository) : Runnable {
         val answer = readLine()
         if (answer == "y" || answer == "yes") {
             Database.getInstance().putAbsentCreds(absent)
-            SendEmailInteractor(PasswordAuthentication(absent.email, absent.password), message).run()
+            println("sended and saved")
+            SendEmailInteractor(PasswordAuthentication(absent.email, absent.password), message)/*.run()*/
         } else {
             println("Message not sended")
         }

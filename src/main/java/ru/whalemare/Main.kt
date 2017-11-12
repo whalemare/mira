@@ -16,7 +16,8 @@ import java.util.*
  * @since 2017
  * @author Anton Vlasov - whalemare
  */
-@Command(name = "mira")
+@Command(name = "mira",
+        sortOptions = false)
 class Main : Runnable {
 
     @Option(names = arrayOf("-h", "--help"),
