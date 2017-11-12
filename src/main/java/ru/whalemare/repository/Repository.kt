@@ -6,6 +6,7 @@ import com.taskadapter.redmineapi.bean.Project
 import com.taskadapter.redmineapi.bean.User
 import com.taskadapter.redmineapi.internal.ResultsWrapper
 import ru.whalemare.model.Absent
+import ru.whalemare.model.Message
 
 /**
  * @since 2017
@@ -28,4 +29,6 @@ interface Repository {
     fun updateIssue(issue: Issue)
 
     fun getAbsentCreds(): Absent?
+
+    fun getAbsentMessage(): Message
 }

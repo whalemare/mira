@@ -8,18 +8,23 @@ import java.util.concurrent.Callable
  * @since 2017
  * @author Anton Vlasov - whalemare
  */
-class MessageInteractor(val message: Message) : Callable<Message> {
+class MessageInteractor(private val message: Message) : Callable<Message> {
 
     override fun call(): Message {
-        var subject = ""
+        var subject = message.subject
         val parsedMessageLines = mutableListOf<String>()
-        message.params.forEach { (key, value) ->
-            subject = subject.replace("\$$key", value)
-            message.message.forEach { line ->
-                parsedMessageLines.add(line.replace("\$$key", value))
+
+        message.message.forEach { line ->
+            var parsed = line
+            message.params.forEach { key, value ->
+                parsed = parsed.replace("\$$key", value)
             }
+            parsedMessageLines.add(parsed)
         }
 
+        message.params.forEach { key, value ->
+            subject = subject.replace("\$$key", value)
+        }
 
         return Message(subject, parsedMessageLines, emptyMap())
     }

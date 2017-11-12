@@ -1,107 +1,83 @@
 package ru.whalemare.command
 
-import picocli.CommandLine.Command
+import picocli.CommandLine
 import picocli.CommandLine.Option
-import ru.whalemare.repository.Database
-import ru.whalemare.model.Absent
+import ru.whalemare.model.Message
 import ru.whalemare.repository.Repository
-import ru.whalemare.usecase.SendEmailInteractor
-import javax.mail.PasswordAuthentication
-
+import ru.whalemare.usecase.MessageInteractor
 
 /**
  * @since 2017
  * @author Anton Vlasov - whalemare
  */
-@Command(name = "absent",
+@CommandLine.Command(name = "absent",
         description = arrayOf("Notify all about your absent today"),
         showDefaultValues = true)
-class AbsentCommand(val repository: Repository) : Runnable {
+class AbsentCommand(val repository: Repository): Runnable {
 
-    @Option(names = arrayOf("-t", "--time"),
-            description = arrayOf("The time at which you will be on the job"))
-    val time: String = ""
-
-    @Option(names = arrayOf("-r", "--reason"),
-            description = arrayOf("Reason, why you can not work"))
-    val reason: List<String> = listOf("учёба")
-
-    @Option(names = arrayOf("-s", "--sources"),
-            description = arrayOf("How can members contact with you?"))
-    val sources: List<String> = listOf("skype", "почта", "телефон")
-
-    @Option(names = arrayOf("-c", "--clear"),
-            description = arrayOf("Clear you current config for absent: email from, email to, password"))
-    val clear: Boolean = false
-
-    @Option(names = arrayOf("-h", "-?", "--help"),
+    @Option(names = arrayOf("-?", "--help"),
             description = arrayOf("Help"),
             usageHelp = true)
     val help = true
 
+    @Option(names = arrayOf("-t", "--time"),
+            description = arrayOf("The time at which you will be on the job"),
+            required = true)
+    val time: String = ""
+
+    @Option(names = arrayOf("-ln", "--ln", "--lastname"), split = " ",
+            description = arrayOf("The time at which you will be on the job"))
+    val lastname: String = ""
+
+    @Option(names = arrayOf("-r", "--reason"),
+            description = arrayOf("Reason, why you can not work"))
+    val reason: String = ""
+
+//    @Option(names = arrayOf("-p", "--params"),
+//            description = arrayOf("The option to generate text, that your teammates will be able to contact you.",
+//                    "For example usage: -p telegram=whalemare",
+//                    "\t will be converted to: telegram: whalemare",
+//                    ""))
+//    val sources: Map<String, String> = mapOf()
+
     override fun run() {
-        var absent = if (clear) {
-            Absent()
-        } else {
-            repository.getAbsentCreds()
-        }
-        if (absent == null) absent = Absent()
+        val message = repository.getAbsentMessage()
 
-        while (absent.email.isNullOrBlank()) {
-            print("From >> "); absent.email = readLine()
+        if (lastname.isNotBlank()) {
+            message.params["lastname"] = lastname
         }
 
-        while (absent.recipient.isNullOrBlank()) {
-            print("To >> "); absent.recipient = readLine()
+        if (reason.isNotBlank()) {
+            message.params["reason"] = reason
         }
 
-        while (absent.password.isNullOrBlank()) {
-            print("Pass >> "); val pass = readPassword()
-            absent.password = String(pass)
+        if (time.isNotBlank()) {
+            message.params["time"] = time
         }
 
-        val me = repository.getMe()
+        val parsedMessage = MessageInteractor(message).call()
+        sendMessage(parsedMessage)
+    }
 
-        val message = Message(
-                from = absent.email!!,
-                to = absent.recipient!!,
-                subject = "${me.lastName}. Опоздание",
-                message = "Причина отсутствия: $reason\n" +
-                        "Какое время буду отсутствовать: буду на работе после $time\n" +
-                        "Каналы связи с вами: $sources"
-        )
-
+    private fun sendMessage(message: Message) {
         println("You really want send message (y/n):")
         message.println()
         val answer = readLine()
         if (answer == "y" || answer == "yes") {
-            Database.getInstance().putAbsentCreds(absent)
+//            Database.getInstance().putAbsentCreds(absent)
             println("sended and saved")
-            SendEmailInteractor(PasswordAuthentication(absent.email, absent.password), message)/*.run()*/
+//            SendEmailInteractor(PasswordAuthentication(absent.email, absent.password), message)/*.run()*/
         } else {
             println("Message not sended")
         }
     }
 
-    private fun readPassword(): CharArray {
-        return if (System.console() != null) {
-            System.console().readPassword()
-        } else {
-            readLine()?.toCharArray() ?: charArrayOf()
+    private fun Message.println() {
+        println("Subject: $subject")
+        println("Message:")
+        message.forEach {
+            println(it)
         }
     }
 
-    data class Message(
-            val from: String,
-            val to: String,
-            val subject: String,
-            val message: String
-    )
-
-    private fun Message.println() {
-        println("From: $from")
-        println("To: $to")
-        println("Subject: $subject")
-        println("Message: $message")
-    }
 }

@@ -9,6 +9,7 @@ import com.taskadapter.redmineapi.bean.TimeEntryFactory
 import com.taskadapter.redmineapi.bean.User
 import com.taskadapter.redmineapi.internal.ResultsWrapper
 import ru.whalemare.model.Absent
+import ru.whalemare.model.Message
 
 /**
  * @since 2017
@@ -60,4 +61,11 @@ class RepositoryRedmine(private val redmine: RedmineManager) : Repository {
         return Database.getInstance().getAbsentCreds()
     }
 
+    override fun getAbsentMessage(): Message {
+        var message = Database.getInstance().getAbsentMessage()
+        if (message == null) {
+            message = Message()
+        }
+        return message
+    }
 }

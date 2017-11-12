@@ -3,6 +3,7 @@ package ru.whalemare.repository
 import com.google.gson.Gson
 import ru.whalemare.model.Absent
 import ru.whalemare.model.Auth
+import ru.whalemare.model.Message
 import java.io.File
 
 /**
@@ -13,6 +14,7 @@ class Database private constructor() {
     companion object {
         const val MAP_REDMINE = "redmine.json"
         const val FILE_EMAIL = "email.json"
+        const val FILE_ABSENT_MESSAGE = "absent.json"
 //        const val KEY_ENDPOINT = "endpoint"
 //        const val KEY_API = "keyapi"
         private var database: Database? = null
@@ -26,7 +28,7 @@ class Database private constructor() {
         }
     }
 
-
+    val gson = Gson()
 
     fun putRedmine(endpoint: String, apiKey: String) {
         if (endpoint.isBlank() && apiKey.isBlank()) {
@@ -49,7 +51,7 @@ class Database private constructor() {
         val file = File(MAP_REDMINE).apply {
             createNewFile()
         }
-        val auth: Auth? = Gson().fromJson(file.readText(), Auth::class.java)
+        val auth: Auth? = gson.fromJson(file.readText(), Auth::class.java)
         return auth
     }
 
@@ -57,7 +59,7 @@ class Database private constructor() {
         val file = File(FILE_EMAIL).apply {
             createNewFile()
         }
-        val absentCreds: Absent? = Gson().fromJson(file.readText(), Absent::class.java)
+        val absentCreds: Absent? = gson.fromJson(file.readText(), Absent::class.java)
         return absentCreds
     }
 
@@ -65,7 +67,15 @@ class Database private constructor() {
         val file = File(FILE_EMAIL).apply {
             createNewFile()
         }
-        val json = Gson().toJson(absent, Absent::class.java)
+        val json = gson.toJson(absent, Absent::class.java)
         file.writeText(json)
+    }
+
+    fun getAbsentMessage(): Message? {
+        val file = File(FILE_ABSENT_MESSAGE).apply {
+            createNewFile()
+        }
+        val message: Message? = gson.fromJson(file.readText(), Message::class.java)
+        return message
     }
 }
