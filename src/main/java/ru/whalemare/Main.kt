@@ -1,12 +1,10 @@
-
 import com.taskadapter.redmineapi.RedmineManagerFactory
 import com.taskadapter.redmineapi.bean.User
-import ru.whalemare.command.*
-import ru.whalemare.model.Auth
 import picocli.CommandLine
 import picocli.CommandLine.Command
 import picocli.CommandLine.Option
 import ru.whalemare.command.*
+import ru.whalemare.model.Auth
 import ru.whalemare.repository.Database
 import ru.whalemare.repository.Repository
 import ru.whalemare.repository.RepositoryRedmine
@@ -48,8 +46,9 @@ class Main : Runnable {
             println()
         }
 
-        fun parse(args: Array<String>) {
-            val commandLine = CommandLine(Main())
+        @JvmStatic
+        fun getCommandLine(): CommandLine {
+            return CommandLine(Main())
                     .addSubcommand("auth", AuthCommand())
                     .addSubcommand("project", ProjectCommand(repository))
                     .addSubcommand("issue", IssueCommand(repository))
@@ -57,6 +56,10 @@ class Main : Runnable {
                     .addSubcommand("absent", AbsentCommand(repository))
                     .addSubcommand("start", StartCommand(repository))
                     .setOverwrittenOptionsAllowed(true)
+        }
+
+        fun parse(args: Array<String>) {
+            val commandLine = getCommandLine()
             commandLine.parseWithHandlers(
                     CommandLine.RunLast(),
                     System.out,

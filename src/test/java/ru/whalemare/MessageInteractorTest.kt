@@ -24,7 +24,7 @@ class MessageInteractorTest {
                         "Какое время буду отсутствовать: буду на работе после \$time",
                         "Каналы связи с вами: \$source"
                 ),
-                params = mapOf(
+                params = mutableMapOf(
                         "lastname" to "Власов",
                         "reason" to "учёба",
                         "time" to "12:00",

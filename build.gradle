@@ -39,6 +39,8 @@ dependencies {
 
     testCompile("org.junit.jupiter:junit-jupiter-api:5.0.0-M1")
     testRuntime("org.junit.vintage:junit-vintage-engine:4.12.0-M1")
+    testCompile group: 'org.mockito', name: 'mockito-all', version: '1.8.4'
+
 }
 
 compileKotlin {
