@@ -16,7 +16,9 @@ import usecase.InteractorBash
         showDefaultValues = true)
 class StartCommand(val repository: Repository) : Runnable {
 
-    @Option(names = arrayOf("-i", "-id", "--id"), required = true)
+    @Option(names = arrayOf("-i", "-id", "--id"),
+            description = arrayOf("Id of issue, that will be started"),
+            required = true)
     val id: Int = Int.MIN_VALUE
 
     @Option(names = arrayOf("-m", "-me", "--me"),
@@ -30,6 +32,11 @@ class StartCommand(val repository: Repository) : Runnable {
     @Option(names = arrayOf("-p", "--postfix"),
             description = arrayOf("Add postfix to your branch name. ex: feature/#12345-postfix"))
     val postfix: String = ""
+
+    @Option(names = arrayOf("-h", "--help"),
+            description = arrayOf("Help"),
+            usageHelp = true)
+    val help = true
 
     override fun run() {
         val issue = repository.getIssue(id)

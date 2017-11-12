@@ -34,6 +34,11 @@ class AbsentCommand(val repository: repository.Repository) : Runnable {
             description = arrayOf("Clear you current config for absent: email from, email to, password"))
     val clear: Boolean = false
 
+    @Option(names = arrayOf("-h", "--help"),
+            description = arrayOf("Help"),
+            usageHelp = true)
+    val help = true
+
     override fun run() {
         var absent = if (clear) {
             Absent()
@@ -91,11 +96,11 @@ class AbsentCommand(val repository: repository.Repository) : Runnable {
             val subject: String,
             val message: String
     )
-}
 
-private fun AbsentCommand.Message.println() {
-    println("From: $from")
-    println("To: $to")
-    println("Subject: $subject")
-    println("Message: $message")
+    private fun AbsentCommand.Message.println() {
+        println("From: $from")
+        println("To: $to")
+        println("Subject: $subject")
+        println("Message: $message")
+    }
 }

@@ -15,9 +15,9 @@ import java.util.concurrent.Callable
         description = arrayOf("Manage your projects: show all, filterRest"))
 class ProjectCommand(val repository: Repository) : Callable<Unit> {
     @Option(names = arrayOf("-h", "--help"),
-            description = arrayOf("Help description"),
+            description = arrayOf("Help"),
             usageHelp = true)
-    var help: Boolean = false
+    val help = true
 
     @Option(names = arrayOf("-a", "--all"),
             description = arrayOf("Print all available projects for your account"))

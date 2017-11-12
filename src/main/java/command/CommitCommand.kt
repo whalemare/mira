@@ -25,6 +25,11 @@ class CommitCommand(val repository: Repository) : Runnable {
             description = arrayOf("Set minutes to time for commit"))
     var minutes: String = ""
 
+    @Option(names = arrayOf("-h", "--help"),
+            description = arrayOf("Help"),
+            usageHelp = true)
+    val help = true
+
     override fun run() {
         val countHours = if (hours.isNotBlank()) {
             hours.toInt()
