@@ -1,6 +1,6 @@
-package usecase
+package ru.whalemare.usecase
 
-import model.Message
+import ru.whalemare.model.Message
 import java.util.concurrent.Callable
 
 /**

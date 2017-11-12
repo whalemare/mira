@@ -1,11 +1,11 @@
-package repository
+package ru.whalemare.repository
 
 import com.taskadapter.redmineapi.Params
 import com.taskadapter.redmineapi.bean.Issue
 import com.taskadapter.redmineapi.bean.Project
 import com.taskadapter.redmineapi.bean.User
 import com.taskadapter.redmineapi.internal.ResultsWrapper
-import model.Absent
+import ru.whalemare.model.Absent
 
 /**
  * @since 2017

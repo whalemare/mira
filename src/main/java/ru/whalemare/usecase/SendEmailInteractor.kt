@@ -1,6 +1,6 @@
-package usecase
+package ru.whalemare.usecase
 
-import command.AbsentCommand
+import ru.whalemare.command.AbsentCommand
 import java.util.*
 import javax.mail.*
 import javax.mail.internet.InternetAddress

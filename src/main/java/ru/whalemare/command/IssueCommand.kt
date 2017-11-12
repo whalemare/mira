@@ -1,11 +1,11 @@
-package command
+package ru.whalemare.command
 
 import com.taskadapter.redmineapi.bean.Issue
 import com.taskadapter.redmineapi.internal.ResultsWrapper
-import extension.println
+import ru.whalemare.extension.println
 import picocli.CommandLine.Command
 import picocli.CommandLine.Option
-import repository.Repository
+import ru.whalemare.repository.Repository
 
 /**
  * @rest http://www.redmine.org/projects/redmine/wiki/Rest_Issues

@@ -1,8 +1,8 @@
-package repository
+package ru.whalemare.repository
 
 import com.google.gson.Gson
-import model.Absent
-import model.Auth
+import ru.whalemare.model.Absent
+import ru.whalemare.model.Auth
 import java.io.File
 
 /**

@@ -1,11 +1,11 @@
-package command
+package ru.whalemare.command
 
 import com.taskadapter.redmineapi.bean.Issue
-import extension.*
 import picocli.CommandLine.Command
 import picocli.CommandLine.Option
-import repository.Repository
-import usecase.InteractorBash
+import ru.whalemare.repository.Repository
+import ru.whalemare.extension.*
+import ru.whalemare.usecase.InteractorBash
 
 /**
  * @since 2017

@@ -1,9 +1,9 @@
-package command
+package ru.whalemare.command
 
-import model.Auth
+import ru.whalemare.model.Auth
 import picocli.CommandLine.Command
 import picocli.CommandLine.Option
-import repository.Database
+import ru.whalemare.repository.Database
 import java.util.concurrent.Callable
 
 /**

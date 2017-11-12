@@ -1,4 +1,4 @@
-package model
+package ru.whalemare.model
 
 /**
  * @since 2017
@@ -10,8 +10,3 @@ data class Message(
         val message: List<String> = listOf(),
         val params: Map<String, String> = emptyMap()
 )
-//data class Params(
-//		val reason: String, //учёба
-//		val time: String, //12:00
-//		val source: String //telegram: whalemare, slack: whalemare phone: (смотри в intranet)
-//)

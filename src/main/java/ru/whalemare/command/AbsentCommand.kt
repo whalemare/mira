@@ -1,10 +1,11 @@
-package command
+package ru.whalemare.command
 
-import model.Absent
 import picocli.CommandLine.Command
 import picocli.CommandLine.Option
-import repository.Database
-import usecase.SendEmailInteractor
+import ru.whalemare.repository.Database
+import ru.whalemare.model.Absent
+import ru.whalemare.repository.Repository
+import ru.whalemare.usecase.SendEmailInteractor
 import javax.mail.PasswordAuthentication
 
 
@@ -15,7 +16,7 @@ import javax.mail.PasswordAuthentication
 @Command(name = "absent",
         description = arrayOf("Notify all about your absent today"),
         showDefaultValues = true)
-class AbsentCommand(val repository: repository.Repository) : Runnable {
+class AbsentCommand(val repository: Repository) : Runnable {
 
     @Option(names = arrayOf("-t", "--time"),
             description = arrayOf("The time at which you will be on the job"))
@@ -97,7 +98,7 @@ class AbsentCommand(val repository: repository.Repository) : Runnable {
             val message: String
     )
 
-    private fun AbsentCommand.Message.println() {
+    private fun Message.println() {
         println("From: $from")
         println("To: $to")
         println("Subject: $subject")

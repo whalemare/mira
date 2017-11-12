@@ -1,14 +1,15 @@
 
 import com.taskadapter.redmineapi.RedmineManagerFactory
 import com.taskadapter.redmineapi.bean.User
-import command.*
-import model.Auth
+import ru.whalemare.command.*
+import ru.whalemare.model.Auth
 import picocli.CommandLine
 import picocli.CommandLine.Command
 import picocli.CommandLine.Option
-import repository.Database
-import repository.Repository
-import repository.RepositoryRedmine
+import ru.whalemare.command.*
+import ru.whalemare.repository.Database
+import ru.whalemare.repository.Repository
+import ru.whalemare.repository.RepositoryRedmine
 import java.util.*
 
 

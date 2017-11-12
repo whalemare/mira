@@ -1,4 +1,4 @@
-package extension
+package ru.whalemare.extension
 
 import com.taskadapter.redmineapi.bean.Tracker
 import com.taskadapter.redmineapi.bean.TrackerFactory

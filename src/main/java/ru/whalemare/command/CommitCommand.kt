@@ -1,8 +1,8 @@
-package command
+package ru.whalemare.command
 
 import picocli.CommandLine.Command
 import picocli.CommandLine.Option
-import repository.Repository
+import ru.whalemare.repository.Repository
 
 /**
  * @since 2017

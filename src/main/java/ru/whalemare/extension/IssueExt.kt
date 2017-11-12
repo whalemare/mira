@@ -1,10 +1,10 @@
-package extension
+package ru.whalemare.extension
 
 import com.jakewharton.fliptables.FlipTable
 import com.taskadapter.redmineapi.bean.Issue
 import com.taskadapter.redmineapi.bean.IssueStatus
 import com.taskadapter.redmineapi.bean.IssueStatusFactory
-import extension.IssueExt.IN_PROGRESS
+import ru.whalemare.extension.IssueExt.IN_PROGRESS
 
 /**
  * @since 2017

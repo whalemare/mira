@@ -1,10 +1,10 @@
-package command
+package ru.whalemare.command
 
 import com.jakewharton.fliptables.FlipTableConverters
 import com.taskadapter.redmineapi.bean.Project
 import picocli.CommandLine.Command
 import picocli.CommandLine.Option
-import repository.Repository
+import ru.whalemare.repository.*
 import java.util.concurrent.Callable
 
 /**

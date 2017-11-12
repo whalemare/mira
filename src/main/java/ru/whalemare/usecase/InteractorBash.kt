@@ -1,4 +1,4 @@
-package usecase
+package ru.whalemare.usecase
 
 import java.io.BufferedReader
 import java.io.InputStreamReader
