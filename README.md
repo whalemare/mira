@@ -76,74 +76,8 @@ Commands:
 
 ### Help commands
 
-#### Project
-```
-project -h
-Usage: project [-ah] [-f=<query>]
-Manage your projects: show all, filterRest
-  -a, --all                   Print all available projects for your account
-  -f, --filterRest=<query>    Filter projects by id, name and link (short-name)
-  -h, -?, --help              Help
-```
+You can see list of all available commands [here](help.md)
 
-#### Issue
-
-```
-Usage: issue [-ahp] [-me] [-f=<projectName>] [-i=<id>] [-fr=<String=String>]...
-Manage your issues: see assigned issues, see your issues, filterRest.
-  -a, --all                   Show all available info
-  -f, --filter=<projectName>  Filter issues by project name
-
-
-      -fr, --filter-rest=<String=String>
-                              Filter issues with specific REST params
-                              See all available commands on http://www.redmine.
-                                org/projects/redmine/wiki/Rest_Issues
-  -h, -?, --help              Help
-  -i, -id, --id=<id>          Index of search issue. It`s terminate operation
-      -me, --me               Filter issues by assigned to me
-  -p, --print                 Print issue data. By default = true
-```
-
-#### Commit
-```
-Usage: commit [-?] [-h=<hours>] -i=<id> [-m=<minutes>]
-Commit your time: to issues, with favorite lists
-  -?, --help                  Help
-  -h, --hours=<hours>         Set hours to time for commit
-  -i, -id, --id=<id>          Issue id of task for commit time
-  -m, --minutes=<minutes>     Set minutes to time for commit
-```
-
-#### Absent
-```
-Usage: absent [-ch] [-r=<reason>] [-s=<sources>] -t=<time>
-Notify all about your absent today
-  -c, --clear                 Clear you current config for absent: email from,
-                                email to, password
-  -h, -?, --help              Help
-  -r, --reason=<reason>       Reason, why you can not work
-                                Default: учёба
-  -s, --sources=<sources>     How can members contact with you?
-                                Default: skype, почта, телефон
-  -t, --time=<time>           The time at which you will be on the job
-                                Default:
-```
-#### Start
-
-```
-Usage: start [-chm] -i=<id> [-p=<postfix>]
-Start your issues with this command. Automatically change status of issue,
-create branch and etc.
-  -c, --create                Create and checkout to issue branch or not
-  -h, -?, --help              Help
-  -i, -id, --id=<id>          Id of issue, that will be started
-                                Default: -2147483648
-  -m, -me, --me               Assign issue to you, if it`s already not assigned
-  -p, --postfix=<postfix>     Add postfix to your branch name. ex:
-                                feature/#12345-postfix
-                                Default:
-```
 License
 -------
 
