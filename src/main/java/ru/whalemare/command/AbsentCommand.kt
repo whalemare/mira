@@ -6,6 +6,7 @@ import ru.whalemare.model.Absent
 import ru.whalemare.model.Message
 import ru.whalemare.repository.Repository
 import ru.whalemare.usecase.MessageInteractor
+import ru.whalemare.usecase.SendEmailInteractor
 
 /**
  * @since 2017
@@ -121,7 +122,7 @@ class AbsentCommand(val repository: Repository) : Runnable {
     }
 
     protected fun sendMessage(absent: Absent, message: Message) {
-//            SendEmailInteractor(PasswordAuthentication(absent.email, absent.password), message)/*.run()*/
+        SendEmailInteractor(absent, message).run()
     }
 
     private fun Message.println() {
