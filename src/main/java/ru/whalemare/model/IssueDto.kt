@@ -22,10 +22,11 @@ data class IssueDto(
         val assignedId: Int = Integer.MIN_VALUE,
         val assignedName: String = "",
         val authorId: Int = Int.MIN_VALUE,
-        val authorName: String = ""
+        val authorName: String = "",
+        val alias: String = ""
 ) {
     companion object {
-        fun from(issue: Issue): IssueDto {
+        fun from(issue: Issue, alias: String = ""): IssueDto {
             return IssueDto(
                     id = issue.id,
                     projectId = issue.projectId,
@@ -40,7 +41,8 @@ data class IssueDto(
                     assignedId = issue.assigneeId,
                     assignedName = issue.assigneeName,
                     authorName = issue.authorName,
-                    authorId = issue.authorId
+                    authorId = issue.authorId,
+                    alias = alias
             )
         }
     }

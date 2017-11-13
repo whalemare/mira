@@ -15,32 +15,43 @@ import ru.whalemare.repository.Repository
         description = arrayOf("Add issues to favorite list"))
 class FavoriteCommand(val repository: Repository) : Runnable {
 
-    @Option(names = arrayOf("-c", "--create"),
-            description = arrayOf("Add selected issue to list of favorites (alias)"))
-    var issueIdC: Int? = null
-
-
     @Option(names = arrayOf("-d", "--delete"),
             description = arrayOf("Add selected issue to list of favorites (alias)"))
     var issueIdD: Int? = null
 
     override fun run() {
-        issueIdC?.let { create(repository.getIssue(it)) }
-
-//        issueIdU?.let { update(repository.getIssue(it)) }
-
         issueIdD?.let { delete(repository.getIssue(it)) }
-    }
-
-    fun create(issue: Issue) {
-        val issues = mutableListOf(*repository.getFavoriteIssues().toTypedArray())
-        issues.removeIf { it.id == issue.id }
-        issues.add(IssueDto.from(issue))
-        repository.setFavoriteIssue(issues.toList())
     }
 
     fun delete(issue: Issue) {
 
+    }
+
+    @Command(name = "create")
+    class Create(val repository: Repository): Runnable {
+
+        @Option(names = arrayOf("-c", "--create"),
+                required = true,
+                description = arrayOf("Create new alias to selected issue"))
+        var issueId: Int? = null
+
+        @Option(names = arrayOf("-as", "--alias"))
+        var alias: String? = null
+
+        override fun run() {
+            if (issueId == null) {
+                println("You must set issue id")
+            } else {
+                val issue = repository.getIssue(issueId!!)
+                val favorites = mutableListOf(*repository.getFavoriteIssues().toTypedArray())
+                favorites.removeIf { it.id == issue.id }
+                val issueDto = IssueDto.from(issue, alias ?: "")
+                favorites.add(issueDto)
+                repository.setFavoriteIssue(favorites.toList())
+                println("Successfully add issue:")
+                issueDto.println()
+            }
+        }
     }
 
     @Command(name = "read",
@@ -76,19 +87,19 @@ class FavoriteCommand(val repository: Repository) : Runnable {
         }
     }
 
-//    @Command(name = "update",
-//            description = arrayOf("Update issues from favorite list"))
-//    class Update(val repository: Repository): Runnable {
-//        @Option(names = arrayOf("-u", "--update"),
-//                description = arrayOf("Add selected issue to list of favorites (alias)"))
-//        var issueId: Int? = null
-//
-//        @Option(names = arrayOf("-a", "--all"),
-//                description = arrayOf("Update all issues from list to actual redmine "))
-//        var all: Boolean = false
-//
-//        override fun run() {
-//            if (s)
-//        }
-//    }
+    @Command(name = "update",
+            description = arrayOf("Update issues from favorite list"))
+    class Update(val repository: Repository) : Runnable {
+        @Option(names = arrayOf("-u", "--update"),
+                description = arrayOf("Add selected issue to list of favorites (alias)"))
+        var issueId: Int? = null
+
+        @Option(names = arrayOf("-a", "--all"),
+                description = arrayOf("Update all issues from list to actual redmine "))
+        var all: Boolean = false
+
+        override fun run() {
+            TODO("Unsupported Operation")
+        }
+    }
 }

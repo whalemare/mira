@@ -23,9 +23,9 @@ fun List<IssueDto>?.println(showAll: Boolean = true) {
     }
 
     val headers = if (showAll) {
-        arrayOf("id", "subject", "authorName", "assigned", "status", "spent", "estimated", "created")
+        arrayOf("id", "alias", "subject", "authorName", "assigned", "status", "spent", "estimated", "created")
     } else {
-        arrayOf("id", "subject", "assigned", "status", "spent")
+        arrayOf("id", "alias", "subject", "assigned", "status", "spent")
     }
 
     val content = if (showAll) {
@@ -33,6 +33,7 @@ fun List<IssueDto>?.println(showAll: Boolean = true) {
             val issue = this[it]
             return@Array arrayOf(
                     issue.id.toString(),
+                    issue.alias,
                     issue.subject,
                     issue.authorName,
                     issue.assignedName,
@@ -47,6 +48,7 @@ fun List<IssueDto>?.println(showAll: Boolean = true) {
             val issue = this[it]
             return@Array arrayOf(
                     issue.id.toString(),
+                    issue.alias,
                     issue.subject,
                     issue.assignedName,
                     issue.tracker?.name ?: "?",

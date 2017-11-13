@@ -62,6 +62,8 @@ class Main : Runnable {
         private fun getFavoriteCommand(): CommandLine {
             return CommandLine(FavoriteCommand(repository))
                     .addSubcommand("read", FavoriteCommand.Read(repository))
+                    .addSubcommand("create", FavoriteCommand.Create(repository))
+                    .addSubcommand("update", FavoriteCommand.Update(repository))
         }
 
         fun parse(args: Array<String>) {
