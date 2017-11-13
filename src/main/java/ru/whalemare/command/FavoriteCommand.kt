@@ -1,6 +1,5 @@
 package ru.whalemare.command
 
-import com.taskadapter.redmineapi.bean.Issue
 import picocli.CommandLine.Command
 import picocli.CommandLine.Option
 import ru.whalemare.extension.println
@@ -15,27 +14,21 @@ import ru.whalemare.repository.Repository
         description = arrayOf("Add issues to favorite list"))
 class FavoriteCommand(val repository: Repository) : Runnable {
 
-    @Option(names = arrayOf("-d", "--delete"),
-            description = arrayOf("Add selected issue to list of favorites (alias)"))
-    var issueIdD: Int? = null
-
     override fun run() {
-        issueIdD?.let { delete(repository.getIssue(it)) }
+        // command has`t options
     }
 
-    fun delete(issue: Issue) {
+    @Command(name = "create",
+            description = arrayOf("Add issues to favorite list"))
+    class Create(val repository: Repository) : Runnable {
 
-    }
-
-    @Command(name = "create")
-    class Create(val repository: Repository): Runnable {
-
-        @Option(names = arrayOf("-c", "--create"),
+        @Option(names = arrayOf("-i", "--id"),
                 required = true,
-                description = arrayOf("Create new alias to selected issue"))
+                description = arrayOf("Select issue by id"))
         var issueId: Int? = null
 
-        @Option(names = arrayOf("-as", "--alias"))
+        @Option(names = arrayOf("-as", "--alias"),
+                description = arrayOf("Create new alias to selected issue"))
         var alias: String? = null
 
         override fun run() {
@@ -58,9 +51,9 @@ class FavoriteCommand(val repository: Repository) : Runnable {
             description = arrayOf("Read issues from favorite list"))
     class Read(val repository: Repository) : Runnable {
 
-        @Option(names = arrayOf("-r", "--read"),
+        @Option(names = arrayOf("-i", "--id"),
                 arity = "0..1",
-                description = arrayOf("Add selected issue to list of favorites (alias)"))
+                description = arrayOf("Select issue by id"))
         var issueId: Int? = null
 
         @Option(names = arrayOf("-a", "--all"),
@@ -90,8 +83,8 @@ class FavoriteCommand(val repository: Repository) : Runnable {
     @Command(name = "update",
             description = arrayOf("Update issues from favorite list"))
     class Update(val repository: Repository) : Runnable {
-        @Option(names = arrayOf("-u", "--update"),
-                description = arrayOf("Add selected issue to list of favorites (alias)"))
+        @Option(names = arrayOf("-i", "--id"),
+                description = arrayOf("Select issue by id"))
         var issueId: Int? = null
 
         @Option(names = arrayOf("-a", "--all"),
@@ -100,6 +93,34 @@ class FavoriteCommand(val repository: Repository) : Runnable {
 
         override fun run() {
             TODO("Unsupported Operation")
+        }
+    }
+
+    @Command(name = "delete",
+            description = arrayOf("Delete issues from favorite list"))
+    class Delete(val repository: Repository) : Runnable {
+        @Option(names = arrayOf("-i", "--id"),
+                arity = "1..*",
+                split = ",",
+                description = arrayOf("Select issue by id"))
+        var issueIds: Array<Int> = emptyArray()
+
+        override fun run() {
+            if (issueIds.isEmpty()) {
+                println("You must set issue id")
+            } else {
+                val favorites = repository.getFavoriteIssues()
+                val delta = mutableListOf<IssueDto>()
+                val filtered = favorites.filter {
+                    val answer = !issueIds.contains(it.id)
+                    if (!answer) delta.add(it)
+                    answer
+                }
+                repository.setFavoriteIssue(filtered)
+
+                println("Successfully removed: ")
+                delta.println()
+            }
         }
     }
 }

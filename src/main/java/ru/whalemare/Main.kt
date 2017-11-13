@@ -64,6 +64,7 @@ class Main : Runnable {
                     .addSubcommand("read", FavoriteCommand.Read(repository))
                     .addSubcommand("create", FavoriteCommand.Create(repository))
                     .addSubcommand("update", FavoriteCommand.Update(repository))
+                    .addSubcommand("delete", FavoriteCommand.Delete(repository))
         }
 
         fun parse(args: Array<String>) {
