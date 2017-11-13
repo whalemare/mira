@@ -6,7 +6,7 @@ import java.util.*
 
 /**
  * @since 2017
- * @author Anton Vlasov - whalemare
+ * @authorName Anton Vlasov - whalemare
  */
 data class IssueDto(
         val id: Int = Integer.MIN_VALUE,
@@ -17,10 +17,12 @@ data class IssueDto(
         val startDate: Date? = null,
         val createdDate: Date? = null,
         val updatedDate: Date? = null,
-        val spentHours: Float = Float.MIN_VALUE,
-        val estimatedHours: Float = Float.MIN_VALUE,
+        val spentHours: Float? = null,
+        val estimatedHours: Float? = null,
         val assignedId: Int = Integer.MIN_VALUE,
-        val assignedName: String = ""
+        val assignedName: String = "",
+        val authorId: Int = Int.MIN_VALUE,
+        val authorName: String = ""
 ) {
     companion object {
         fun from(issue: Issue): IssueDto {
@@ -36,7 +38,9 @@ data class IssueDto(
                     spentHours = issue.spentHours,
                     estimatedHours = issue.estimatedHours,
                     assignedId = issue.assigneeId,
-                    assignedName = issue.assigneeName
+                    assignedName = issue.assigneeName,
+                    authorName = issue.authorName,
+                    authorId = issue.authorId
             )
         }
     }

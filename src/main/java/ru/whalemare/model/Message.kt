@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 /**
  * @since 2017
- * @author Anton Vlasov - whalemare
+ * @authorName Anton Vlasov - whalemare
  */
 
 data class Message(

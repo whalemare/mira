@@ -6,11 +6,12 @@ import com.taskadapter.redmineapi.bean.Project
 import com.taskadapter.redmineapi.bean.User
 import com.taskadapter.redmineapi.internal.ResultsWrapper
 import ru.whalemare.model.Absent
+import ru.whalemare.model.IssueDto
 import ru.whalemare.model.Message
 
 /**
  * @since 2017
- * @author Anton Vlasov - whalemare
+ * @authorName Anton Vlasov - whalemare
  */
 interface Repository {
 
@@ -37,4 +38,8 @@ interface Repository {
     fun putAbsentMessage(message: Message): String
 
     fun putFavoriteIssue(issue: Issue)
+
+    fun setFavoriteIssue(issues: List<IssueDto>)
+
+    fun getFavoriteIssues(): List<IssueDto>
 }

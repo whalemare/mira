@@ -6,7 +6,7 @@ import ru.whalemare.repository.Repository
 
 /**
  * @since 2017
- * @author Anton Vlasov - whalemare
+ * @authorName Anton Vlasov - whalemare
  */
 @Command(name = "commit",
         description = arrayOf("Commit your time: to issues, with favorite lists"))

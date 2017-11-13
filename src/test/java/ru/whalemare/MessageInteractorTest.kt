@@ -8,7 +8,7 @@ import ru.whalemare.usecase.MessageInteractor
 
 /**
  * @since 2017
- * @author Anton Vlasov - whalemare
+ * @authorName Anton Vlasov - whalemare
  */
 class MessageInteractorTest {
 

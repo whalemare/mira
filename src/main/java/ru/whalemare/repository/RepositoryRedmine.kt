@@ -9,13 +9,15 @@ import com.taskadapter.redmineapi.bean.TimeEntryFactory
 import com.taskadapter.redmineapi.bean.User
 import com.taskadapter.redmineapi.internal.ResultsWrapper
 import ru.whalemare.model.Absent
+import ru.whalemare.model.IssueDto
 import ru.whalemare.model.Message
 
 /**
  * @since 2017
- * @author Anton Vlasov - whalemare
+ * @authorName Anton Vlasov - whalemare
  */
 class RepositoryRedmine(private val redmine: RedmineManager) : Repository {
+
     val cache: MutableMap<String, Any> = mutableMapOf()
 
     override fun updateIssue(issue: Issue) {
@@ -83,5 +85,13 @@ class RepositoryRedmine(private val redmine: RedmineManager) : Repository {
 
     override fun putFavoriteIssue(issue: Issue) {
         Database.getInstance().putFavoriteIssue(issue)
+    }
+
+    override fun setFavoriteIssue(issues: List<IssueDto>) {
+        Database.getInstance().setFavoriteIssue(issues)
+    }
+
+    override fun getFavoriteIssues(): List<IssueDto> {
+        return Database.getInstance().getFavoriteIssues()
     }
 }

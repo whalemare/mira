@@ -10,7 +10,7 @@ import ru.whalemare.repository.Repository
 /**
  * @rest http://www.redmine.org/projects/redmine/wiki/Rest_Issues
  * @since 2017
- * @author Anton Vlasov - whalemare
+ * @authorName Anton Vlasov - whalemare
  */
 @Command(name = "issue",
         description = arrayOf("Manage your issues: see assigned issues, see your issues, filterRest."))

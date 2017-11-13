@@ -12,7 +12,7 @@ import java.io.File
 
 /**
  * @since 2017
- * @author Anton Vlasov - whalemare
+ * @authorName Anton Vlasov - whalemare
  */
 class Database private constructor() {
     companion object {
@@ -115,6 +115,13 @@ class Database private constructor() {
         issues.removeIf { it.id == issue.id }
         issues.add(IssueDto.from(issue))
 
+        file.writeText(gson.toJson(issues))
+    }
+
+    fun setFavoriteIssue(issues: List<IssueDto>) {
+        val file = File(FILE_FAVORITE_ISSUES).apply {
+            createNewFile()
+        }
         file.writeText(gson.toJson(issues))
     }
 

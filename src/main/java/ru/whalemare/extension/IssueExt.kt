@@ -8,7 +8,7 @@ import ru.whalemare.extension.IssueExt.IN_PROGRESS
 
 /**
  * @since 2017
- * @author Anton Vlasov - whalemare
+ * @authorName Anton Vlasov - whalemare
  */
 
 object IssueExt {
@@ -75,7 +75,7 @@ fun List<Issue>?.println(showAll: Boolean = true) {
     }
 
     val headers = if (showAll) {
-        arrayOf("id", "subject", "author", "assigned", "status", "spent", "estimated", "created", "closed")
+        arrayOf("id", "subject", "authorName", "assigned", "status", "spent", "estimated", "created", "closed")
     } else {
         arrayOf("id", "subject", "assigned", "status", "spent")
     }

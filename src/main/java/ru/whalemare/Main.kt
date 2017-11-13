@@ -13,7 +13,7 @@ import java.util.*
 
 /**
  * @since 2017
- * @author Anton Vlasov - whalemare
+ * @authorName Anton Vlasov - whalemare
  */
 @Command(name = "mira",
         sortOptions = false)
@@ -55,6 +55,7 @@ class Main : Runnable {
                     .addSubcommand("commit", CommitCommand(repository))
                     .addSubcommand("absent", AbsentCommand(repository))
                     .addSubcommand("start", StartCommand(repository))
+                    .addSubcommand("favorite", FavoriteCommand(repository))
                     .setOverwrittenOptionsAllowed(true)
         }
 

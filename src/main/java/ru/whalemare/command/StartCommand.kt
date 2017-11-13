@@ -9,7 +9,7 @@ import ru.whalemare.usecase.InteractorBash
 
 /**
  * @since 2017
- * @author Anton Vlasov - whalemare
+ * @authorName Anton Vlasov - whalemare
  */
 @Command(name = "start",
         description = arrayOf("Start your issues with this command. Automatically change status of issue, create branch and etc."),

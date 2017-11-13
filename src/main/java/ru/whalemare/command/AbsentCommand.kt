@@ -10,7 +10,7 @@ import ru.whalemare.usecase.SendEmailInteractor
 
 /**
  * @since 2017
- * @author Anton Vlasov - whalemare
+ * @authorName Anton Vlasov - whalemare
  */
 @CommandLine.Command(name = "absent",
         description = arrayOf("Notify all about your absent today"),
