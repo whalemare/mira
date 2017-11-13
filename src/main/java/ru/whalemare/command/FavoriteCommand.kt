@@ -19,29 +19,15 @@ class FavoriteCommand(val repository: Repository) : Runnable {
             description = arrayOf("Add selected issue to list of favorites (alias)"))
     var issueIdC: Int? = null
 
-    @Option(names = arrayOf("-r", "--read"),
-            arity = "0..1",
-            description = arrayOf("Add selected issue to list of favorites (alias)"))
-    var issueIdR: Int? = null
-
-    @Option(names = arrayOf("-u", "--update"),
-            description = arrayOf("Add selected issue to list of favorites (alias)"))
-    var issueIdU: Int? = null
 
     @Option(names = arrayOf("-d", "--delete"),
             description = arrayOf("Add selected issue to list of favorites (alias)"))
     var issueIdD: Int? = null
 
-    @Option(names = arrayOf("-a", "--all"),
-            description = arrayOf("Show all available info"))
-    var showAll: Boolean = false
-
     override fun run() {
         issueIdC?.let { create(repository.getIssue(it)) }
 
-        read(issueIdR)
-
-        issueIdU?.let { update(repository.getIssue(it)) }
+//        issueIdU?.let { update(repository.getIssue(it)) }
 
         issueIdD?.let { delete(repository.getIssue(it)) }
     }
@@ -53,31 +39,56 @@ class FavoriteCommand(val repository: Repository) : Runnable {
         repository.setFavoriteIssue(issues.toList())
     }
 
-    fun read(issueId: Int?) {
-        if (issueId == null) {
-            if (showAll) {
-                val issues = repository.getFavoriteIssues()
-                issues.println(showAll)
-            } else {
-                println("You must set issue id to --read option")
+    fun delete(issue: Issue) {
 
-            }
-        } else {
-            val issue = repository.getFavoriteIssues().firstOrNull { it.id == issueId }
-            if (issue == null) {
-                println("Issue with id #$issueId not found in favorites list")
-                // TODO: add availability for adding issue to favorite list
+    }
+
+    @Command(name = "read",
+            description = arrayOf("Read issues from favorite list"))
+    class Read(val repository: Repository) : Runnable {
+
+        @Option(names = arrayOf("-r", "--read"),
+                arity = "0..1",
+                description = arrayOf("Add selected issue to list of favorites (alias)"))
+        var issueId: Int? = null
+
+        @Option(names = arrayOf("-a", "--all"),
+                description = arrayOf("Show all available info"))
+        var showAll: Boolean = false
+
+        override fun run() {
+            if (issueId == null) {
+                if (showAll) {
+                    val issues = repository.getFavoriteIssues()
+                    issues.println(showAll)
+                } else {
+                    println("You must set issue id to --read option")
+                }
             } else {
-                issue.println(showAll)
+                val issue = repository.getFavoriteIssues().firstOrNull { it.id == issueId }
+                if (issue == null) {
+                    println("Issue with id #$issueId not found in favorites list")
+                    // TODO: add availability for adding issue to favorite list
+                } else {
+                    issue.println(showAll)
+                }
             }
         }
     }
 
-    fun update(issue: Issue) {
-
-    }
-
-    fun delete(issue: Issue) {
-
-    }
+//    @Command(name = "update",
+//            description = arrayOf("Update issues from favorite list"))
+//    class Update(val repository: Repository): Runnable {
+//        @Option(names = arrayOf("-u", "--update"),
+//                description = arrayOf("Add selected issue to list of favorites (alias)"))
+//        var issueId: Int? = null
+//
+//        @Option(names = arrayOf("-a", "--all"),
+//                description = arrayOf("Update all issues from list to actual redmine "))
+//        var all: Boolean = false
+//
+//        override fun run() {
+//            if (s)
+//        }
+//    }
 }

@@ -55,8 +55,13 @@ class Main : Runnable {
                     .addSubcommand("commit", CommitCommand(repository))
                     .addSubcommand("absent", AbsentCommand(repository))
                     .addSubcommand("start", StartCommand(repository))
-                    .addSubcommand("favorite", FavoriteCommand(repository))
+                    .addSubcommand("favorite", getFavoriteCommand())
                     .setOverwrittenOptionsAllowed(true)
+        }
+
+        private fun getFavoriteCommand(): CommandLine {
+            return CommandLine(FavoriteCommand(repository))
+                    .addSubcommand("read", FavoriteCommand.Read(repository))
         }
 
         fun parse(args: Array<String>) {
