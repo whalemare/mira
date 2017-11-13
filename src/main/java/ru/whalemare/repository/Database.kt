@@ -1,8 +1,12 @@
 package ru.whalemare.repository
 
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.google.gson.reflect.TypeToken
+import com.taskadapter.redmineapi.bean.Issue
 import ru.whalemare.model.Absent
 import ru.whalemare.model.Auth
+import ru.whalemare.model.IssueDto
 import ru.whalemare.model.Message
 import java.io.File
 
@@ -15,8 +19,7 @@ class Database private constructor() {
         const val MAP_REDMINE = "redmine.json"
         const val FILE_EMAIL = "email.json"
         const val FILE_ABSENT_MESSAGE = "absent.json"
-//        const val KEY_ENDPOINT = "endpoint"
-//        const val KEY_API = "keyapi"
+        const val FILE_FAVORITE_ISSUES = "issues.json"
         private var database: Database? = null
 
         fun getInstance(): Database {
@@ -28,7 +31,10 @@ class Database private constructor() {
         }
     }
 
-    val gson = Gson()
+    val gson = GsonBuilder()
+            .setPrettyPrinting()
+            .serializeNulls()
+            .create()
 
     fun putRedmine(endpoint: String, apiKey: String) {
         if (endpoint.isBlank() && apiKey.isBlank()) {
@@ -88,4 +94,29 @@ class Database private constructor() {
         file.writeText(json)
         return file.path
     }
+
+    fun getFavoriteIssues(): List<IssueDto> {
+        val file = File(FILE_FAVORITE_ISSUES).apply {
+            createNewFile()
+        }
+        val issues: List<IssueDto>? = gson.fromJson<List<IssueDto>>(file.readText())
+        return if (issues == null) {
+            mutableListOf()
+        } else {
+            issues
+        }
+    }
+
+    fun putFavoriteIssue(issue: Issue) {
+        val file = File(FILE_FAVORITE_ISSUES).apply {
+            createNewFile()
+        }
+        val issues = mutableListOf(*getFavoriteIssues().toTypedArray())
+        issues.removeIf { it.id == issue.id }
+        issues.add(IssueDto.from(issue))
+
+        file.writeText(gson.toJson(issues))
+    }
+
+    inline fun <reified T> Gson.fromJson(json: String) = this.fromJson<T>(json, object: TypeToken<T>() {}.type)
 }

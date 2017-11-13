@@ -80,4 +80,8 @@ class RepositoryRedmine(private val redmine: RedmineManager) : Repository {
     override fun putAbsentMessage(message: Message): String {
         return Database.getInstance().putAbsentMessage(message)
     }
+
+    override fun putFavoriteIssue(issue: Issue) {
+        Database.getInstance().putFavoriteIssue(issue)
+    }
 }

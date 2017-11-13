@@ -35,4 +35,6 @@ interface Repository {
     fun putAbsentCreds(absent: Absent): String
 
     fun putAbsentMessage(message: Message): String
+
+    fun putFavoriteIssue(issue: Issue)
 }

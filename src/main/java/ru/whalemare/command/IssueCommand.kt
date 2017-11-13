@@ -2,9 +2,9 @@ package ru.whalemare.command
 
 import com.taskadapter.redmineapi.bean.Issue
 import com.taskadapter.redmineapi.internal.ResultsWrapper
-import ru.whalemare.extension.println
 import picocli.CommandLine.Command
 import picocli.CommandLine.Option
+import ru.whalemare.extension.println
 import ru.whalemare.repository.Repository
 
 /**
@@ -19,6 +19,10 @@ class IssueCommand(val repository: Repository) : Runnable {
     @Option(names = arrayOf("-i", "--id", "-id"),
             description = arrayOf("Index of search issue. It`s terminate operation"))
     var id: Int = Int.MIN_VALUE
+
+    @Option(names = arrayOf("-plus", "--plus"),
+            description = arrayOf("Add selected issue to list of favorites (alias)"))
+    var add: Boolean = false
 
     @Option(names = arrayOf("-p", "--print"),
             description = arrayOf("Print issue data. By default = true"))
@@ -50,6 +54,7 @@ class IssueCommand(val repository: Repository) : Runnable {
         if (id > Int.MIN_VALUE) {
             val issue = repository.getIssue(id)
             if (print) issue.println(showAll)
+            if (add) repository.putFavoriteIssue(issue)
             return
         }
 
