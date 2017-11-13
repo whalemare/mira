@@ -5,13 +5,15 @@ Help for MIRA
 Usage: mira [-h]
   -h, --help                  Show help message for mira
 Commands:
-  auth     Authorize, before using MIRA
-  project  Manage your projects: show all, filterRest
-  issue    Manage your issues: see assigned issues, see your issues, filterRest.
-  commit   Commit your time: to issues, with favorite lists
-  absent   Notify all about your absent today
-  start    Start your issues with this command. Automatically change status of
-             issue, create branch and etc.
+  auth      Authorize, before using MIRA
+  project   Manage your projects: show all, filterRest
+  issue     Manage your issues: see assigned issues, see your issues,
+              filterRest.
+  commit    Commit your time: to issues, with favorite lists
+  absent    Notify all about your absent today
+  start     Start your issues with this command. Automatically change status of
+              issue, create branch and etc.
+  favorite  Add issues to favorite list
 ```
 
 List of commands
@@ -38,7 +40,8 @@ Manage your projects: show all, filterRest
 
 ### issue
 ```
-Usage: issue [-ahp] [-me] [-f=<projectName>] [-i=<id>] [-fr=<String=String>]...
+Usage: issue [-ahp] [-me] [-plus] [-f=<projectName>] [-i=<id>]
+             [-fr=<String=String>]...
 Manage your issues: see assigned issues, see your issues, filterRest.
   -a, --all                   Show all available info
   -f, --filter=<projectName>  Filter issues by project name
@@ -52,6 +55,7 @@ Manage your issues: see assigned issues, see your issues, filterRest.
   -i, -id, --id=<id>          Index of search issue. It`s terminate operation
       -me, --me               Filter issues by assigned to me
   -p, --print                 Print issue data. By default = true
+      -plus, --plus           Add selected issue to list of favorites (alias)
 ```
 
 ### commit
@@ -91,4 +95,16 @@ create branch and etc.
   -p, --postfix=<postfix>     Add postfix to your branch name. ex:
                                 feature/#12345-postfix
                                 Default:
+```
+
+### favorite
+```
+Unmatched argument [-?]
+Usage: favorite
+Add issues to favorite list
+Commands:
+  read    Read issues from favorite list
+  create  Add issues to favorite list
+  update  Update issues from favorite list
+  delete  Delete issues from favorite list
 ```
