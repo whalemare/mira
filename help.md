@@ -60,9 +60,14 @@ Manage your issues: see assigned issues, see your issues, filterRest.
 
 ### commit
 ```
-Usage: commit [-?] [-h=<hours>] -i=<id> [-m=<minutes>]
+Usage: commit [-?] [-as=<alias>] [-h=<hours>] [-i=<id>] [-m=<minutes>] [-c=
+              [<message>]...]...
 Commit your time: to issues, with favorite lists
   -?, --help                  Help
+      -as, --alias=<alias>    You can use alias from favorite lists, to
+                                determinate task
+  -c, -ms, --message, --comment=[<message>]...
+                              Set message to time for commit
   -h, --hours=<hours>         Set hours to time for commit
   -i, -id, --id=<id>          Issue id of task for commit time
   -m, --minutes=<minutes>     Set minutes to time for commit
