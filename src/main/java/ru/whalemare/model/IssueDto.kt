@@ -13,16 +13,16 @@ data class IssueDto(
         val projectId: Int = Integer.MIN_VALUE,
         val projectName: String = "",
         val tracker: Tracker? = null,
-        val subject: String = "",
+        val subject: String? = null,
         val startDate: Date? = null,
         val createdDate: Date? = null,
         val updatedDate: Date? = null,
         val spentHours: Float? = null,
         val estimatedHours: Float? = null,
-        val assignedId: Int = Integer.MIN_VALUE,
-        val assignedName: String = "",
-        val authorId: Int = Int.MIN_VALUE,
-        val authorName: String = "",
+        val assignedId: Int? = null,
+        val assignedName: String? = null,
+        val authorId: Int? = null,
+        val authorName: String? = null,
         val alias: String = ""
 ) {
     companion object {

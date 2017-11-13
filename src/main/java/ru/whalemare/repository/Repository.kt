@@ -25,7 +25,7 @@ interface Repository {
 
     fun getIssues(map: Map<String, String>): ResultsWrapper<Issue>
 
-    fun commitTime(issueId: Int, hours: Int, minutes: Int)
+    fun commitTime(issueId: Int, hours: Int, minutes: Int, message: String)
 
     fun updateIssue(issue: Issue)
 

@@ -50,10 +50,11 @@ class RepositoryRedmine(private val redmine: RedmineManager) : Repository {
         return cache[key] as User
     }
 
-    override fun commitTime(issueId: Int, hours: Int, minutes: Int) {
+    override fun commitTime(issueId: Int, hours: Int, minutes: Int, message: String) {
         val entry = TimeEntryFactory.create(issueId).apply {
             this.issueId = issueId
             this.hours = (hours.toFloat() + (minutes.toFloat() / 60.toFloat()))
+            this.comment = message
         }
 
         redmine.timeEntryManager.createTimeEntry(entry)

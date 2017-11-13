@@ -33,10 +33,10 @@ fun List<IssueDto>?.println(showAll: Boolean = true) {
             val issue = this[it]
             return@Array arrayOf(
                     issue.id.toString(),
-                    issue.alias,
-                    issue.subject,
-                    issue.authorName,
-                    issue.assignedName,
+                    issue.alias.toString(),
+                    issue.subject.toString(),
+                    issue.authorName.toString(),
+                    issue.assignedName.toString(),
                     issue.tracker?.name ?: "?",
                     issue.spentHours.toString(),
                     issue.estimatedHours.toString(),
@@ -48,9 +48,9 @@ fun List<IssueDto>?.println(showAll: Boolean = true) {
             val issue = this[it]
             return@Array arrayOf(
                     issue.id.toString(),
-                    issue.alias,
-                    issue.subject,
-                    issue.assignedName,
+                    issue.alias.toString(),
+                    issue.subject.toString(),
+                    issue.assignedName.toString(),
                     issue.tracker?.name ?: "?",
                     issue.spentHours.toString()
             )
