@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="mira:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/mira_jar</output-path>
+    <root id="archive" name="mira.jar">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
+        <element id="module-output" name="mira_main" />
+      </element>
+    </root>
+  </artifact>
+</component>
