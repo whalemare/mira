@@ -42,7 +42,7 @@ class FavoriteCommand(val repository: Repository) : Runnable {
                 favorites.add(issueDto)
                 repository.setFavoriteIssue(favorites.toList())
                 println("Successfully add issue:")
-                issueDto.println()
+                issueDto.println(false)
             }
         }
     }
@@ -64,7 +64,7 @@ class FavoriteCommand(val repository: Repository) : Runnable {
             if (issueId == null) {
                 if (showAll) {
                     val issues = repository.getFavoriteIssues()
-                    issues.println(showAll)
+                    issues.println(false)
                 } else {
                     println("You must set issue id to --read option")
                 }
@@ -74,7 +74,7 @@ class FavoriteCommand(val repository: Repository) : Runnable {
                     println("Issue with id #$issueId not found in favorites list")
                     // TODO: add availability for adding issue to favorite list
                 } else {
-                    issue.println(showAll)
+                    issue.println(false)
                 }
             }
         }
